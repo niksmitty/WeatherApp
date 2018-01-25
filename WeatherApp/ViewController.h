@@ -7,9 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <CoreLocation/CoreLocation.h>
+#import "OpenWeatherMapAPIManager.h"
 
-@interface ViewController : UIViewController
-
+@interface ViewController : UIViewController <CLLocationManagerDelegate> {
+    CLLocationManager *locationManager;
+    OpenWeatherMapAPIManager *OWMAPIManager;
+}
 
 @end
-
