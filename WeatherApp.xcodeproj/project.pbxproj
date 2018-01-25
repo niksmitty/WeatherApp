@@ -17,6 +17,8 @@
 		AB25BA502018713D00D59347 /* OpenWeatherMapAPIManager.m in Sources */ = {isa = PBXBuildFile; fileRef = AB25BA4F2018713D00D59347 /* OpenWeatherMapAPIManager.m */; };
 		AB25BA572018869400D59347 /* LocationInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = AB25BA562018869400D59347 /* LocationInfo.m */; };
 		AB25BA5A2018CF2F00D59347 /* Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = AB25BA592018CF2F00D59347 /* Utils.m */; };
+		AB25BA5C201A02B100D59347 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = AB25BA5B201A02B100D59347 /* .gitignore */; };
+		AB25BA5E201A034E00D59347 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = AB25BA5D201A034E00D59347 /* Podfile */; };
 		FF0E6DFC1A746DA4F8C5CDF3 /* libPods-WeatherApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CEEBB954B679B1548DA91682 /* libPods-WeatherApp.a */; };
 /* End PBXBuildFile section */
 
@@ -40,6 +42,8 @@
 		AB25BA562018869400D59347 /* LocationInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationInfo.m; sourceTree = "<group>"; };
 		AB25BA582018CF2F00D59347 /* Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utils.h; sourceTree = "<group>"; };
 		AB25BA592018CF2F00D59347 /* Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utils.m; sourceTree = "<group>"; };
+		AB25BA5B201A02B100D59347 /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		AB25BA5D201A034E00D59347 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; };
 		CEEBB954B679B1548DA91682 /* libPods-WeatherApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-WeatherApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -66,6 +70,8 @@
 		AB25BA272017647600D59347 = {
 			isa = PBXGroup;
 			children = (
+				AB25BA5D201A034E00D59347 /* Podfile */,
+				AB25BA5B201A02B100D59347 /* .gitignore */,
 				AB25BA322017647700D59347 /* WeatherApp */,
 				AB25BA312017647700D59347 /* Products */,
 				C67637B574BE3E0DD3ECB310 /* Pods */,
@@ -199,6 +205,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AB25BA5E201A034E00D59347 /* Podfile in Resources */,
+				AB25BA5C201A02B100D59347 /* .gitignore in Resources */,
 				AB25BA462017647700D59347 /* LaunchScreen.storyboard in Resources */,
 				AB25BA432017647700D59347 /* Assets.xcassets in Resources */,
 				AB25BA3E2017647700D59347 /* Main.storyboard in Resources */,
