@@ -90,12 +90,12 @@
 		AB25BA322017647700D59347 /* WeatherApp */ = {
 			isa = PBXGroup;
 			children = (
+				AB25BA60201A0A0100D59347 /* Helpers */,
 				AB25BA512018768900D59347 /* Models */,
 				AB25BA4D201870DB00D59347 /* Services */,
+				AB25BA5F201A086400D59347 /* Controllers */,
 				AB25BA362017647700D59347 /* AppDelegate.h */,
 				AB25BA372017647700D59347 /* AppDelegate.m */,
-				AB25BA392017647700D59347 /* ViewController.h */,
-				AB25BA3A2017647700D59347 /* ViewController.m */,
 				AB25BA3C2017647700D59347 /* Main.storyboard */,
 				AB25BA422017647700D59347 /* Assets.xcassets */,
 				AB25BA442017647700D59347 /* LaunchScreen.storyboard */,
@@ -119,10 +119,8 @@
 			children = (
 				AB25BA4E2018713D00D59347 /* OpenWeatherMapAPIManager.h */,
 				AB25BA4F2018713D00D59347 /* OpenWeatherMapAPIManager.m */,
-				AB25BA582018CF2F00D59347 /* Utils.h */,
-				AB25BA592018CF2F00D59347 /* Utils.m */,
 			);
-			name = Services;
+			path = Services;
 			sourceTree = "<group>";
 		};
 		AB25BA512018768900D59347 /* Models */ = {
@@ -131,7 +129,25 @@
 				AB25BA552018869400D59347 /* LocationInfo.h */,
 				AB25BA562018869400D59347 /* LocationInfo.m */,
 			);
-			name = Models;
+			path = Models;
+			sourceTree = "<group>";
+		};
+		AB25BA5F201A086400D59347 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				AB25BA392017647700D59347 /* ViewController.h */,
+				AB25BA3A2017647700D59347 /* ViewController.m */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		AB25BA60201A0A0100D59347 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				AB25BA582018CF2F00D59347 /* Utils.h */,
+				AB25BA592018CF2F00D59347 /* Utils.m */,
+			);
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 		C67637B574BE3E0DD3ECB310 /* Pods */ = {
