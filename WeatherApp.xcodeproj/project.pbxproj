@@ -19,6 +19,9 @@
 		AB25BA5A2018CF2F00D59347 /* Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = AB25BA592018CF2F00D59347 /* Utils.m */; };
 		AB25BA5C201A02B100D59347 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = AB25BA5B201A02B100D59347 /* .gitignore */; };
 		AB25BA5E201A034E00D59347 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = AB25BA5D201A034E00D59347 /* Podfile */; };
+		AB48B0F1201F5EFE00938235 /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB48B0F0201F5EFE00938235 /* SWRevealViewController.m */; };
+		AB48B0F4201F677300938235 /* SidebarTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB48B0F3201F677300938235 /* SidebarTableViewController.m */; };
+		AB48B0F82020791E00938235 /* MenuTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AB48B0F72020791E00938235 /* MenuTableViewCell.m */; };
 		FF0E6DFC1A746DA4F8C5CDF3 /* libPods-WeatherApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CEEBB954B679B1548DA91682 /* libPods-WeatherApp.a */; };
 /* End PBXBuildFile section */
 
@@ -44,6 +47,12 @@
 		AB25BA592018CF2F00D59347 /* Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utils.m; sourceTree = "<group>"; };
 		AB25BA5B201A02B100D59347 /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		AB25BA5D201A034E00D59347 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; };
+		AB48B0EF201F5EFE00938235 /* SWRevealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWRevealViewController.h; sourceTree = "<group>"; };
+		AB48B0F0201F5EFE00938235 /* SWRevealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWRevealViewController.m; sourceTree = "<group>"; };
+		AB48B0F2201F677300938235 /* SidebarTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SidebarTableViewController.h; sourceTree = "<group>"; };
+		AB48B0F3201F677300938235 /* SidebarTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SidebarTableViewController.m; sourceTree = "<group>"; };
+		AB48B0F62020791E00938235 /* MenuTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuTableViewCell.h; sourceTree = "<group>"; };
+		AB48B0F72020791E00938235 /* MenuTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuTableViewCell.m; sourceTree = "<group>"; };
 		CEEBB954B679B1548DA91682 /* libPods-WeatherApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-WeatherApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -90,8 +99,10 @@
 		AB25BA322017647700D59347 /* WeatherApp */ = {
 			isa = PBXGroup;
 			children = (
+				AB48B0EB201F5E8300938235 /* SWRevealViewController */,
 				AB25BA60201A0A0100D59347 /* Helpers */,
 				AB25BA512018768900D59347 /* Models */,
+				AB48B0F5202078BE00938235 /* Views */,
 				AB25BA4D201870DB00D59347 /* Services */,
 				AB25BA5F201A086400D59347 /* Controllers */,
 				AB25BA362017647700D59347 /* AppDelegate.h */,
@@ -137,6 +148,8 @@
 			children = (
 				AB25BA392017647700D59347 /* ViewController.h */,
 				AB25BA3A2017647700D59347 /* ViewController.m */,
+				AB48B0F2201F677300938235 /* SidebarTableViewController.h */,
+				AB48B0F3201F677300938235 /* SidebarTableViewController.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -148,6 +161,24 @@
 				AB25BA592018CF2F00D59347 /* Utils.m */,
 			);
 			path = Helpers;
+			sourceTree = "<group>";
+		};
+		AB48B0EB201F5E8300938235 /* SWRevealViewController */ = {
+			isa = PBXGroup;
+			children = (
+				AB48B0EF201F5EFE00938235 /* SWRevealViewController.h */,
+				AB48B0F0201F5EFE00938235 /* SWRevealViewController.m */,
+			);
+			path = SWRevealViewController;
+			sourceTree = "<group>";
+		};
+		AB48B0F5202078BE00938235 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				AB48B0F62020791E00938235 /* MenuTableViewCell.h */,
+				AB48B0F72020791E00938235 /* MenuTableViewCell.m */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		C67637B574BE3E0DD3ECB310 /* Pods */ = {
@@ -289,10 +320,13 @@
 			files = (
 				AB25BA412017647700D59347 /* WeatherApp.xcdatamodeld in Sources */,
 				AB25BA502018713D00D59347 /* OpenWeatherMapAPIManager.m in Sources */,
+				AB48B0F82020791E00938235 /* MenuTableViewCell.m in Sources */,
 				AB25BA3B2017647700D59347 /* ViewController.m in Sources */,
+				AB48B0F1201F5EFE00938235 /* SWRevealViewController.m in Sources */,
 				AB25BA382017647700D59347 /* AppDelegate.m in Sources */,
 				AB25BA352017647700D59347 /* main.m in Sources */,
 				AB25BA5A2018CF2F00D59347 /* Utils.m in Sources */,
+				AB48B0F4201F677300938235 /* SidebarTableViewController.m in Sources */,
 				AB25BA572018869400D59347 /* LocationInfo.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
