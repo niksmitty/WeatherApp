@@ -8,9 +8,9 @@
 		<true/>
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>testString0</string>
+	<string>This application wants to use your location</string>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>testString1</string>
+	<string>This application wants to use your location</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleExecutable</key>
