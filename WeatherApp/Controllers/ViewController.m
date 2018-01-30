@@ -9,6 +9,7 @@
 #import "ViewController.h"
 #import "LocationInfo.h"
 #import <AFNetworking/UIImageView+AFNetworking.h>
+#import "SWRevealViewController.h"
 
 @interface ViewController ()
 
@@ -22,7 +23,18 @@ static int const OFFSET_WIDTH = 10;
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.view.backgroundColor = [UIColor colorWithRed:254./255. green:254./255. blue:254./255. alpha:1.];
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
+    self.navigationController.navigationBar.shadowImage = [UIImage new];
+    
+    [self.locatingButton setTarget:self];
+    [self.locatingButton setAction:@selector(locatingButtonTapped:)];
+    
+    SWRevealViewController *revealVC = self.revealViewController;
+    if (revealVC) {
+        [self.menuButton setTarget:self.revealViewController];
+        [self.menuButton setAction:@selector(revealToggle:)];
+        [self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
+    }
     
     [self.activity startAnimating];
     
@@ -34,16 +46,34 @@ static int const OFFSET_WIDTH = 10;
     NSString *apiKey = @"81d2bde991f9d4ee935b9cc996d94b9c";
     OWMAPIManager = [[OpenWeatherMapAPIManager alloc] initWithApiKey:apiKey];
     
-    locationManager = [[CLLocationManager alloc] init];
-    locationManager.delegate = self;
-    locationManager.distanceFilter = kCLDistanceFilterNone;
-    locationManager.desiredAccuracy = kCLLocationAccuracyBest;
-    
-    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0) {
-        [locationManager requestWhenInUseAuthorization];
+    if (_selectedCity) {
+        [self refreshCurrentWeatherInformationByCity:_selectedCity];
+    } else {
+        [self initializeAndStartLocationManager];
     }
+}
+
+-(void)setSelectedCity:(NSString *)selectedCity {
+    _selectedCity = selectedCity;
     
-    [locationManager startUpdatingLocation];
+    [self.activity startAnimating];
+}
+
+-(void)refreshCurrentWeatherInformationByCity:(NSString*)city {
+    [OWMAPIManager getCurrentWeatherByCity:city withCompletionHandler:^(NSError *error, NSDictionary *result) {
+        if (error) {
+            NSLog(@"%@", error);
+        } else {
+            self.temperatureValueLabel.text = [NSString stringWithFormat:@"%.1f°C", [result[@"main"][@"temp"] floatValue]];
+            self.currentCityLabel.text = [NSString stringWithFormat:@"%@, %@", result[@"name"], result[@"sys"][@"country"]];
+            self.sunriseTimeLabel.text = [NSString stringWithFormat:@"Sunrise time: %@", result[@"sys"][@"sunrise"]];
+            self.sunsetTimeLabel.text = [NSString stringWithFormat:@"Sunset time: %@", result[@"sys"][@"sunset"]];
+            
+            [self placeWeatherConditionIcons:result[@"weather"]];
+            
+            [self.activity stopAnimating];
+        }
+    }];
 }
 
 -(void)getInfoOfLocation:(CLLocation*)location completion:(void (^)(LocationInfo*))completionHandler {
@@ -97,13 +127,35 @@ static int const OFFSET_WIDTH = 10;
     }
 }
 
--(void)placeWeatherConditionsIcons:(NSArray*)weatherConditions {
+-(void)placeWeatherConditionIcons:(NSArray*)weatherConditions {
     int currentIconIndex = 0;
     int iconsTotal = (int)[weatherConditions count];
     for (NSDictionary *condDict in weatherConditions) {
         [self createIconViewWithIconURL:[OWMAPIManager getIconFullUrlWithIconId:condDict[@"icon"]] description:condDict[@"description"] iconsTotal:iconsTotal andCurrentIconIndex:currentIconIndex];
         currentIconIndex++;
     }
+}
+
+-(void)clearWeatherIconsView {
+    [self.weatherIconsView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
+}
+
+- (void)locatingButtonTapped:(id)sender {
+    [self clearWeatherIconsView];
+    [self initializeAndStartLocationManager];
+}
+
+-(void)initializeAndStartLocationManager {
+    locationManager = [[CLLocationManager alloc] init];
+    locationManager.delegate = self;
+    locationManager.distanceFilter = kCLDistanceFilterNone;
+    locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+    
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0) {
+        [locationManager requestWhenInUseAuthorization];
+    }
+    
+    [locationManager startUpdatingLocation];
 }
 
 #pragma mark - CLLocationManagerDelegate
@@ -114,20 +166,7 @@ static int const OFFSET_WIDTH = 10;
     locationManager = nil;
     CLLocation *newLocation = [locations lastObject];
     [self getInfoOfLocation:newLocation completion:^(LocationInfo *locationInfo) {
-        [OWMAPIManager getCurrentWeatherByCityname:locationInfo.locality withCompletionHandler:^(NSError *error, NSDictionary *result) {
-            if (error) {
-                NSLog(@"%@", error);
-            } else {
-                self.temperatureValueLabel.text = [NSString stringWithFormat:@"%.1f°C", [result[@"main"][@"temp"] floatValue]];
-                self.currentCityLabel.text = [NSString stringWithFormat:@"%@, %@", result[@"name"], result[@"sys"][@"country"]];
-                self.sunriseTimeLabel.text = [NSString stringWithFormat:@"Sunrise time: %@", result[@"sys"][@"sunrise"]];
-                self.sunsetTimeLabel.text = [NSString stringWithFormat:@"Sunset time: %@", result[@"sys"][@"sunset"]];
-                
-                [self placeWeatherConditionsIcons:result[@"weather"]];
-                
-                [self.activity stopAnimating];
-            }
-        }];
+        [self refreshCurrentWeatherInformationByCity:locationInfo.locality];
     }];
 }
 
