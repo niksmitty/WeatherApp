@@ -32,8 +32,8 @@ static NSString * const OWMAPIVersion = @"2.5";
     return self;
 }
 
--(void)getCurrentWeatherByCityname:(NSString*)name withCompletionHandler:(void (^)(NSError *error, NSDictionary *result))completion {
-    NSString *urlPart = [NSString stringWithFormat:@"%@%@/weather?q=%@", OWMAPIDataSuffix, OWMAPIVersion, name];
+-(void)getCurrentWeatherByCity:(NSString*)city withCompletionHandler:(void (^)(NSError *error, NSDictionary *result))completion {
+    NSString *urlPart = [NSString stringWithFormat:@"%@%@/weather?q=%@", OWMAPIDataSuffix, OWMAPIVersion, city];
     NSString *fullUrlString = [NSString stringWithFormat:@"%@&APPID=%@", urlPart, _apiKey];
     NSString *escapedUrlString = [fullUrlString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]];
     
