@@ -42,6 +42,7 @@ static int const OFFSET_WIDTH = 10;
     self.currentCityLabel.text = @"";
     self.sunriseTimeLabel.text = @"";
     self.sunsetTimeLabel.text = @"";
+    self.semicircleImageView.hidden = YES;
     
     NSString *apiKey = @"81d2bde991f9d4ee935b9cc996d94b9c";
     OWMAPIManager = [[OpenWeatherMapAPIManager alloc] initWithApiKey:apiKey];
@@ -68,6 +69,8 @@ static int const OFFSET_WIDTH = 10;
             self.currentCityLabel.text = [NSString stringWithFormat:@"%@, %@", result[@"name"], result[@"sys"][@"country"]];
             self.sunriseTimeLabel.text = [NSString stringWithFormat:@"Sunrise time: %@", result[@"sys"][@"sunrise"]];
             self.sunsetTimeLabel.text = [NSString stringWithFormat:@"Sunset time: %@", result[@"sys"][@"sunset"]];
+            
+            self.semicircleImageView.hidden = NO;
             
             [self placeWeatherConditionIcons:result[@"weather"]];
             

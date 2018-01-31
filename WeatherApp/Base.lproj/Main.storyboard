@@ -111,6 +111,7 @@
                         <outlet property="currentCityLabel" destination="cZ6-gO-5mp" id="9fB-ig-TIK"/>
                         <outlet property="locatingButton" destination="0an-OT-Gwx" id="3x6-Q3-pZB"/>
                         <outlet property="menuButton" destination="ULe-9D-SuA" id="Gsr-Xi-Ccq"/>
+                        <outlet property="semicircleImageView" destination="8kp-0X-9Kn" id="vwT-Xe-2R9"/>
                         <outlet property="sunriseTimeLabel" destination="N0w-Tf-C95" id="Sys-NP-NLw"/>
                         <outlet property="sunsetTimeLabel" destination="J70-8z-weT" id="zpS-dj-xDT"/>
                         <outlet property="temperatureValueLabel" destination="LD1-VQ-aQk" id="gwS-mj-HfS"/>
@@ -149,7 +150,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="dWM-cS-RKp" sceneMemberID="viewController">
                     <toolbarItems/>
                     <nil key="simulatedBottomBarMetrics"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="FG9-ak-511">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="FG9-ak-511">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
