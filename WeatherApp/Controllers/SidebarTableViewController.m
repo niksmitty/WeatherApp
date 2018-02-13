@@ -10,6 +10,7 @@
 #import "SWRevealViewController.h"
 #import "ViewController.h"
 #import "MenuTableViewCell.h"
+#import "AppDelegate.h"
 
 @interface SidebarTableViewController ()
 
@@ -19,42 +20,121 @@ static NSString * const reuseHeaderIdentifier = @"headerCell";
 static NSString * const reuseIdentifier = @"menuCell";
 
 @implementation SidebarTableViewController {
-    NSArray *menuItems;
+    NSMutableArray *menuItems;
+    
+    NSManagedObjectContext *managedContext;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    managedContext = ((AppDelegate*)[[UIApplication sharedApplication] delegate]).persistentContainer.viewContext;
+    
     self.tableView.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"sidebar_background"]];
     
-    menuItems = @[@"Perm", @"Saint Petersburg", @"Moscow", @"city4", @"city5"];
+    menuItems = [self fetchCitiesFromDB];
+}
+
+- (IBAction)addButtonTapped:(id)sender {
+    // temporary solution
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Add new city"
+                                                                   message:@"Please input name of the city"
+                                                            preferredStyle:UIAlertControllerStyleAlert];
+    [alert addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+        textField.placeholder = @"city";
+        textField.textColor = [UIColor blackColor];
+        textField.clearButtonMode = UITextFieldViewModeWhileEditing;
+        textField.borderStyle = UITextBorderStyleNone;
+    }];
+    [alert addAction:[UIAlertAction actionWithTitle:@"OK"
+                                              style:UIAlertActionStyleDefault
+                                            handler:^(UIAlertAction * _Nonnull action) {
+                                                NSArray *textFields = alert.textFields;
+                                                UITextField *cityField = textFields[0];
+                                                [self saveDataIntoDBWithCityValue:cityField.text];
+                                                [self.tableView reloadData];
+                                            }]];
+    [self presentViewController:alert animated:YES completion:nil];
+}
+
+-(void)saveDataIntoDBWithCityValue:(NSString*)city {
+    NSManagedObject *cityObject = [NSEntityDescription insertNewObjectForEntityForName:@"City" inManagedObjectContext:managedContext];
+    [cityObject setValue:city forKey:@"name"];
+    
+    NSError *error = nil;
+    if ([managedContext save:&error]) {
+        [menuItems addObject:cityObject];
+    } else {
+        NSAssert(NO, @"Error saving context: %@\n%@", [error localizedDescription], [error userInfo]);
+    }
+    
+}
+
+-(NSMutableArray*)fetchCitiesFromDB {
+    NSMutableArray *cities = [NSMutableArray new];
+    
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"City"];
+    NSError *error = nil;
+    NSArray *results = [managedContext executeFetchRequest:request error:&error];
+    if (!results) {
+        NSLog(@"Error fetching City objects: %@\n%@", [error localizedDescription], [error userInfo]);
+        abort();
+    } else {
+        for (NSManagedObject *cityObject in results) {
+            [cities addObject:cityObject];
+        }
+    }
+    
+    return cities;
+}
+
+-(void)deleteCityFromDB:(NSManagedObject*)cityObject {
+    [managedContext deleteObject:cityObject];
+    
+    NSError *error;
+    if (![managedContext save:&error]) {
+        NSAssert(NO, @"Error saving context: %@\n%@", [error localizedDescription], [error userInfo]);
+    }
 }
 
 #pragma mark - Table view data source
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return [menuItems count];
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     MenuTableViewCell *cell = (MenuTableViewCell*)[tableView dequeueReusableCellWithIdentifier:reuseIdentifier forIndexPath:indexPath];
-    cell.cityLabel.text = menuItems[indexPath.row];
+    cell.cityLabel.text = [menuItems[indexPath.row] valueForKey:@"name"];
     return cell;
+}
+
+-(BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    return YES;
+}
+
+-(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        [self deleteCityFromDB:menuItems[indexPath.row]];
+        [menuItems removeObjectAtIndex:indexPath.row];
+        [self.tableView deleteRowsAtIndexPaths:[NSMutableArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        [self.tableView setEditing:NO animated:YES];
+    }
 }
 
 #pragma mark - Table view delegate
 
 -(UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     UITableViewCell *headerCell = [tableView dequeueReusableCellWithIdentifier:reuseHeaderIdentifier];
-    return headerCell;
+    return headerCell.contentView;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return 50.0;
+    return 60.0;
 }
 
 #pragma mark - Navigation
@@ -63,7 +143,7 @@ static NSString * const reuseIdentifier = @"menuCell";
     NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
     UINavigationController *navController = segue.destinationViewController;
     ViewController *mainVC = [navController childViewControllers].firstObject;
-    mainVC.selectedCity = menuItems[indexPath.row];
+    mainVC.selectedCity = [menuItems[indexPath.row] valueForKey:@"name"];
 }
 
 @end
