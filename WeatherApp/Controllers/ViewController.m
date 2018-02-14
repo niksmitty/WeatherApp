@@ -31,6 +31,8 @@ static int const OFFSET_WIDTH = 10;
     
     SWRevealViewController *revealVC = self.revealViewController;
     if (revealVC) {
+        revealVC.toggleAnimationType = SWRevealToggleAnimationTypeEaseOut;
+        revealVC.rearViewRevealOverdraw = 0;
         [self.menuButton setTarget:self.revealViewController];
         [self.menuButton setAction:@selector(revealToggle:)];
         [self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
