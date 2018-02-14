@@ -261,7 +261,7 @@
         <scene sceneID="lZm-vY-3gZ">
             <objects>
                 <tableViewController id="6bn-64-Hr2" customClass="SidebarTableViewController" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="S4O-p6-Uxw">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="S4O-p6-Uxw">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -274,7 +274,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Cities" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Czp-ZD-M35">
-                                            <rect key="frame" x="10" y="12" width="57.5" height="21"/>
+                                            <rect key="frame" x="30" y="12" width="57.5" height="21"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="21" id="lph-zh-xdJ"/>
                                             </constraints>
@@ -282,7 +282,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="contactAdd" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Z0Y-ig-W1L">
-                                            <rect key="frame" x="167.5" y="11.5" width="22" height="22"/>
+                                            <rect key="frame" x="187.5" y="11.5" width="22" height="22"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="22" id="JRO-VO-1Cq"/>
                                                 <constraint firstAttribute="height" constant="22" id="Mgr-Pp-edd"/>
@@ -296,7 +296,7 @@
                                     <constraints>
                                         <constraint firstItem="Z0Y-ig-W1L" firstAttribute="leading" secondItem="Czp-ZD-M35" secondAttribute="trailing" constant="100" id="RMj-vi-ekg"/>
                                         <constraint firstItem="Z0Y-ig-W1L" firstAttribute="centerY" secondItem="hBH-l3-4x5" secondAttribute="centerY" id="Zu7-s9-eTW"/>
-                                        <constraint firstItem="Czp-ZD-M35" firstAttribute="leading" secondItem="hBH-l3-4x5" secondAttribute="leading" constant="10" id="aDh-vH-XC4"/>
+                                        <constraint firstItem="Czp-ZD-M35" firstAttribute="leading" secondItem="hBH-l3-4x5" secondAttribute="leading" constant="30" id="aDh-vH-XC4"/>
                                         <constraint firstItem="Czp-ZD-M35" firstAttribute="centerY" secondItem="hBH-l3-4x5" secondAttribute="centerY" id="fkw-B3-Lks"/>
                                     </constraints>
                                 </tableViewCellContentView>
@@ -310,7 +310,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fUc-MW-tU2">
-                                            <rect key="frame" x="20" y="11.5" width="42" height="21"/>
+                                            <rect key="frame" x="40" y="11.5" width="42" height="21"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="21" id="QfO-bW-XrZ"/>
                                             </constraints>
@@ -321,7 +321,7 @@
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="fUc-MW-tU2" firstAttribute="centerY" secondItem="vke-SB-qaQ" secondAttribute="centerY" id="3Aq-QP-DaA"/>
-                                        <constraint firstItem="fUc-MW-tU2" firstAttribute="leading" secondItem="vke-SB-qaQ" secondAttribute="leading" constant="20" id="Cwr-v0-Twt"/>
+                                        <constraint firstItem="fUc-MW-tU2" firstAttribute="leading" secondItem="vke-SB-qaQ" secondAttribute="leading" constant="40" id="Cwr-v0-Twt"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
