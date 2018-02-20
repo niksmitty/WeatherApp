@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CitySelectorViewController.h"
 
-@interface SidebarTableViewController : UITableViewController
+@interface SidebarTableViewController : UITableViewController<UIPopoverPresentationControllerDelegate, CitySelectorViewControllerDelegate>
 
 @end

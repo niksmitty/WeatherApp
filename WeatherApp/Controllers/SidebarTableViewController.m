@@ -36,25 +36,17 @@ static NSString * const reuseIdentifier = @"menuCell";
 }
 
 - (IBAction)addButtonTapped:(id)sender {
-    // temporary solution
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Add new city"
-                                                                   message:@"Please input name of the city"
-                                                            preferredStyle:UIAlertControllerStyleAlert];
-    [alert addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
-        textField.placeholder = @"city";
-        textField.textColor = [UIColor blackColor];
-        textField.clearButtonMode = UITextFieldViewModeWhileEditing;
-        textField.borderStyle = UITextBorderStyleNone;
-    }];
-    [alert addAction:[UIAlertAction actionWithTitle:@"OK"
-                                              style:UIAlertActionStyleDefault
-                                            handler:^(UIAlertAction * _Nonnull action) {
-                                                NSArray *textFields = alert.textFields;
-                                                UITextField *cityField = textFields[0];
-                                                [self saveDataIntoDBWithCityValue:cityField.text];
-                                                [self.tableView reloadData];
-                                            }]];
-    [self presentViewController:alert animated:YES completion:nil];
+    CitySelectorViewController *citySVC = [CitySelectorViewController new];
+    citySVC.delegate = self;
+    citySVC.modalPresentationStyle = UIModalPresentationPopover;
+    
+    UIPopoverPresentationController *popover = citySVC.popoverPresentationController;
+    popover.delegate = self;
+    popover.sourceView = ((UIButton*)sender).superview;
+    popover.sourceRect = ((UIButton*)sender).frame;
+    popover.permittedArrowDirections = UIPopoverArrowDirectionAny;
+    
+    [self presentViewController:citySVC animated:YES completion:nil];
 }
 
 -(void)saveDataIntoDBWithCityValue:(NSString*)city {
@@ -137,8 +129,7 @@ static NSString * const reuseIdentifier = @"menuCell";
     return 60.0;
 }
 
--(NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+-(NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath {
     return @"-";
 }
 
@@ -149,6 +140,24 @@ static NSString * const reuseIdentifier = @"menuCell";
     UINavigationController *navController = segue.destinationViewController;
     ViewController *mainVC = [navController childViewControllers].firstObject;
     mainVC.selectedCity = [menuItems[indexPath.row] valueForKey:@"name"];
+}
+
+#pragma mark - Popover Presentation Controller Delegate
+
+-(UIModalPresentationStyle)adaptivePresentationStyleForPresentationController:(UIPresentationController *)controller {
+    return UIModalPresentationPopover;
+}
+
+-(UIViewController*)presentationController:(UIPresentationController *)controller viewControllerForAdaptivePresentationStyle:(UIModalPresentationStyle)style {
+    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:controller.presentedViewController];
+    return navController;
+}
+
+#pragma mark - City Selector View Controller delegate
+
+-(void)cityValueWasSelected:(NSString *)cityValue {
+    [self saveDataIntoDBWithCityValue:cityValue];
+    [self.tableView reloadData];
 }
 
 @end
