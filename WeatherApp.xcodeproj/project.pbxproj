@@ -22,6 +22,11 @@
 		AB48B0F1201F5EFE00938235 /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB48B0F0201F5EFE00938235 /* SWRevealViewController.m */; };
 		AB48B0F4201F677300938235 /* SidebarTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB48B0F3201F677300938235 /* SidebarTableViewController.m */; };
 		AB48B0F82020791E00938235 /* MenuTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AB48B0F72020791E00938235 /* MenuTableViewCell.m */; };
+		ABB81132203B0E9F0047D722 /* cityList.json in Resources */ = {isa = PBXBuildFile; fileRef = ABB81131203B0E9F0047D722 /* cityList.json */; };
+		ABB81136203B10E10047D722 /* CitySelectorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABB81134203B10E10047D722 /* CitySelectorViewController.m */; };
+		ABB81137203B10E10047D722 /* CitySelectorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = ABB81135203B10E10047D722 /* CitySelectorViewController.xib */; };
+		ABB8113B203B13CD0047D722 /* CityValueCell.m in Sources */ = {isa = PBXBuildFile; fileRef = ABB81139203B13CD0047D722 /* CityValueCell.m */; };
+		ABB8113C203B13CD0047D722 /* CityValueCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = ABB8113A203B13CD0047D722 /* CityValueCell.xib */; };
 		FF0E6DFC1A746DA4F8C5CDF3 /* libPods-WeatherApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CEEBB954B679B1548DA91682 /* libPods-WeatherApp.a */; };
 /* End PBXBuildFile section */
 
@@ -53,6 +58,13 @@
 		AB48B0F3201F677300938235 /* SidebarTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SidebarTableViewController.m; sourceTree = "<group>"; };
 		AB48B0F62020791E00938235 /* MenuTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuTableViewCell.h; sourceTree = "<group>"; };
 		AB48B0F72020791E00938235 /* MenuTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuTableViewCell.m; sourceTree = "<group>"; };
+		ABB81131203B0E9F0047D722 /* cityList.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = cityList.json; sourceTree = "<group>"; };
+		ABB81133203B10E10047D722 /* CitySelectorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CitySelectorViewController.h; sourceTree = "<group>"; };
+		ABB81134203B10E10047D722 /* CitySelectorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CitySelectorViewController.m; sourceTree = "<group>"; };
+		ABB81135203B10E10047D722 /* CitySelectorViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CitySelectorViewController.xib; sourceTree = "<group>"; };
+		ABB81138203B13CD0047D722 /* CityValueCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CityValueCell.h; sourceTree = "<group>"; };
+		ABB81139203B13CD0047D722 /* CityValueCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CityValueCell.m; sourceTree = "<group>"; };
+		ABB8113A203B13CD0047D722 /* CityValueCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CityValueCell.xib; sourceTree = "<group>"; };
 		CEEBB954B679B1548DA91682 /* libPods-WeatherApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-WeatherApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -150,6 +162,9 @@
 				AB25BA3A2017647700D59347 /* ViewController.m */,
 				AB48B0F2201F677300938235 /* SidebarTableViewController.h */,
 				AB48B0F3201F677300938235 /* SidebarTableViewController.m */,
+				ABB81133203B10E10047D722 /* CitySelectorViewController.h */,
+				ABB81134203B10E10047D722 /* CitySelectorViewController.m */,
+				ABB81135203B10E10047D722 /* CitySelectorViewController.xib */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -157,6 +172,7 @@
 		AB25BA60201A0A0100D59347 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				ABB81131203B0E9F0047D722 /* cityList.json */,
 				AB25BA582018CF2F00D59347 /* Utils.h */,
 				AB25BA592018CF2F00D59347 /* Utils.m */,
 			);
@@ -177,6 +193,9 @@
 			children = (
 				AB48B0F62020791E00938235 /* MenuTableViewCell.h */,
 				AB48B0F72020791E00938235 /* MenuTableViewCell.m */,
+				ABB81138203B13CD0047D722 /* CityValueCell.h */,
+				ABB81139203B13CD0047D722 /* CityValueCell.m */,
+				ABB8113A203B13CD0047D722 /* CityValueCell.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -252,8 +271,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ABB8113C203B13CD0047D722 /* CityValueCell.xib in Resources */,
 				AB25BA5E201A034E00D59347 /* Podfile in Resources */,
 				AB25BA5C201A02B100D59347 /* .gitignore in Resources */,
+				ABB81132203B0E9F0047D722 /* cityList.json in Resources */,
+				ABB81137203B10E10047D722 /* CitySelectorViewController.xib in Resources */,
 				AB25BA462017647700D59347 /* LaunchScreen.storyboard in Resources */,
 				AB25BA432017647700D59347 /* Assets.xcassets in Resources */,
 				AB25BA3E2017647700D59347 /* Main.storyboard in Resources */,
@@ -318,6 +340,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ABB81136203B10E10047D722 /* CitySelectorViewController.m in Sources */,
 				AB25BA412017647700D59347 /* WeatherApp.xcdatamodeld in Sources */,
 				AB25BA502018713D00D59347 /* OpenWeatherMapAPIManager.m in Sources */,
 				AB48B0F82020791E00938235 /* MenuTableViewCell.m in Sources */,
@@ -325,6 +348,7 @@
 				AB48B0F1201F5EFE00938235 /* SWRevealViewController.m in Sources */,
 				AB25BA382017647700D59347 /* AppDelegate.m in Sources */,
 				AB25BA352017647700D59347 /* main.m in Sources */,
+				ABB8113B203B13CD0047D722 /* CityValueCell.m in Sources */,
 				AB25BA5A2018CF2F00D59347 /* Utils.m in Sources */,
 				AB48B0F4201F677300938235 /* SidebarTableViewController.m in Sources */,
 				AB25BA572018869400D59347 /* LocationInfo.m in Sources */,
