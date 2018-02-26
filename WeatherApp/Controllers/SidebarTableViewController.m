@@ -49,9 +49,10 @@ static NSString * const reuseIdentifier = @"menuCell";
     [self presentViewController:citySVC animated:YES completion:nil];
 }
 
--(void)saveDataIntoDBWithCityValue:(NSString*)city {
+-(void)saveDataIntoDBWithCityInfo:(NSDictionary*)cityInfo {
     NSManagedObject *cityObject = [NSEntityDescription insertNewObjectForEntityForName:@"City" inManagedObjectContext:managedContext];
-    [cityObject setValue:city forKey:@"name"];
+    [cityObject setValue:cityInfo[@"id"] forKey:@"id"];
+    [cityObject setValue:cityInfo[@"name"] forKey:@"name"];
     
     NSError *error = nil;
     if ([managedContext save:&error]) {
@@ -139,7 +140,7 @@ static NSString * const reuseIdentifier = @"menuCell";
     NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
     UINavigationController *navController = segue.destinationViewController;
     ViewController *mainVC = [navController childViewControllers].firstObject;
-    mainVC.selectedCity = [menuItems[indexPath.row] valueForKey:@"name"];
+    mainVC.selectedCityId = [menuItems[indexPath.row] valueForKey:@"id"];
 }
 
 #pragma mark - Popover Presentation Controller Delegate
@@ -155,8 +156,8 @@ static NSString * const reuseIdentifier = @"menuCell";
 
 #pragma mark - City Selector View Controller delegate
 
--(void)cityValueWasSelected:(NSString *)cityValue {
-    [self saveDataIntoDBWithCityValue:cityValue];
+-(void)cityValueWasSelected:(NSDictionary*)cityInfo {
+    [self saveDataIntoDBWithCityInfo:cityInfo];
     [self.tableView reloadData];
 }
 

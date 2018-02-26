@@ -49,35 +49,45 @@ static int const OFFSET_WIDTH = 10;
     NSString *apiKey = @"81d2bde991f9d4ee935b9cc996d94b9c";
     OWMAPIManager = [[OpenWeatherMapAPIManager alloc] initWithApiKey:apiKey];
     
-    if (_selectedCity) {
-        [self refreshCurrentWeatherInformationByCity:_selectedCity];
+    if (_selectedCityId) {
+        [self refreshCurrentWeatherInformationByCityId:_selectedCityId];
     } else {
         [self initializeAndStartLocationManager];
     }
 }
 
--(void)setSelectedCity:(NSString *)selectedCity {
-    _selectedCity = selectedCity;
+-(void)setSelectedCityId:(NSString *)selectedCityId {
+    _selectedCityId = selectedCityId;
     
     [self.activity startAnimating];
 }
 
+-(void)placeData:(NSDictionary*)result withError:(NSError*)error {
+    if (error) {
+        NSLog(@"%@", error);
+    } else {
+        self.temperatureValueLabel.text = [NSString stringWithFormat:@"%.1f°C", [result[@"main"][@"temp"] floatValue]];
+        self.currentCityLabel.text = [NSString stringWithFormat:@"%@, %@", result[@"name"], result[@"sys"][@"country"]];
+        self.sunriseTimeLabel.text = [NSString stringWithFormat:@"Sunrise time: %@", result[@"sys"][@"sunrise"]];
+        self.sunsetTimeLabel.text = [NSString stringWithFormat:@"Sunset time: %@", result[@"sys"][@"sunset"]];
+        
+        self.semicircleImageView.hidden = NO;
+        
+        [self placeWeatherConditionIcons:result[@"weather"]];
+        
+        [self.activity stopAnimating];
+    }
+}
+
 -(void)refreshCurrentWeatherInformationByCity:(NSString*)city {
     [OWMAPIManager getCurrentWeatherByCity:city withCompletionHandler:^(NSError *error, NSDictionary *result) {
-        if (error) {
-            NSLog(@"%@", error);
-        } else {
-            self.temperatureValueLabel.text = [NSString stringWithFormat:@"%.1f°C", [result[@"main"][@"temp"] floatValue]];
-            self.currentCityLabel.text = [NSString stringWithFormat:@"%@, %@", result[@"name"], result[@"sys"][@"country"]];
-            self.sunriseTimeLabel.text = [NSString stringWithFormat:@"Sunrise time: %@", result[@"sys"][@"sunrise"]];
-            self.sunsetTimeLabel.text = [NSString stringWithFormat:@"Sunset time: %@", result[@"sys"][@"sunset"]];
-            
-            self.semicircleImageView.hidden = NO;
-            
-            [self placeWeatherConditionIcons:result[@"weather"]];
-            
-            [self.activity stopAnimating];
-        }
+        [self placeData:result withError:error];
+    }];
+}
+
+-(void)refreshCurrentWeatherInformationByCityId:(NSString*)cityId {
+    [OWMAPIManager getCurrentWeatherByCityId:cityId withCompletionHandler:^(NSError *error, NSDictionary *result) {
+        [self placeData:result withError:error];
     }];
 }
 

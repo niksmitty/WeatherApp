@@ -13,6 +13,7 @@
 -(instancetype)initWithApiKey:(NSString*)apiKey;
 
 -(void)getCurrentWeatherByCity:(NSString*)city withCompletionHandler:(void (^)(NSError *error, NSDictionary *result))completion;
+-(void)getCurrentWeatherByCityId:(NSString*)cityId withCompletionHandler:(void (^)(NSError *error, NSDictionary *result))completion;
 -(NSString*)getIconFullUrlWithIconId:(NSString*)iconId;
 
 @end

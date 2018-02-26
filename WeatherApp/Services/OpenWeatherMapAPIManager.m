@@ -47,6 +47,21 @@ static NSString * const OWMAPIVersion = @"2.5";
     }];
 }
 
+-(void)getCurrentWeatherByCityId:(NSString*)cityId withCompletionHandler:(void (^)(NSError *error, NSDictionary *result))completion {
+    NSString *urlPart = [NSString stringWithFormat:@"%@%@/weather?id=%@", OWMAPIDataSuffix, OWMAPIVersion, cityId];
+    NSString *fullUrlString = [NSString stringWithFormat:@"%@&APPID=%@", urlPart, _apiKey];
+    NSString *escapedUrlString = [fullUrlString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]];
+    
+    [self GET:escapedUrlString parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        NSDictionary *convertedResult = [Utils convertResult:(NSDictionary*)responseObject withCurrentTemperatureFormat:_currentTempFormat];
+        if (completion)
+            completion(nil, convertedResult);
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        if (completion)
+            completion(error, [NSDictionary dictionary]);
+    }];
+}
+
 -(NSString*)getIconFullUrlWithIconId:(NSString*)iconId {
     NSString *fullUrlString = [NSString stringWithFormat:@"%@img/w/%@.png", OWMAPIBaseURLString, iconId];
     NSString *escapedUrlString = [fullUrlString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]];

@@ -14,7 +14,7 @@
     CLLocationManager *locationManager;
     OpenWeatherMapAPIManager *OWMAPIManager;
     
-    NSString *_selectedCity;
+    NSString *_selectedCityId;
 }
 
 @property (weak, nonatomic) IBOutlet UILabel *temperatureValueLabel;
@@ -31,6 +31,6 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *menuButton;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *locatingButton;
 
-@property (strong, nonatomic) NSString *selectedCity;
+@property (strong, nonatomic) NSString *selectedCityId;
 
 @end

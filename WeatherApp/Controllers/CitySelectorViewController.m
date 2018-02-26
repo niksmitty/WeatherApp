@@ -52,7 +52,11 @@ static NSString * const reuseIdentifier = @"CityValueCell";
                                                                   error:&error];
     if (!error) {
         NSArray *citiesListObject = [NSJSONSerialization JSONObjectWithData:[citiesListJsonString dataUsingEncoding:NSUTF8StringEncoding] options:0 error:&error];
-        originalCities = cities = [citiesListObject valueForKeyPath:@"name"];
+        originalCities = cities = [NSMutableArray new];
+        for (NSDictionary *cityInfo in citiesListObject) {
+            [cities addObject:@{@"id":[cityInfo[@"id"] stringValue], @"name": cityInfo[@"name"]}];
+        }
+        originalCities = cities;
     }
 }
 
@@ -65,7 +69,7 @@ static NSString * const reuseIdentifier = @"CityValueCell";
 -(UITableViewCell*)tableView:(UITableView *)_tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     CityValueCell *cell = [_tableView dequeueReusableCellWithIdentifier:reuseIdentifier forIndexPath:indexPath];
     
-    cell.cityValueLabel.text = cities[indexPath.row];
+    cell.cityValueLabel.text = cities[indexPath.row][@"name"];
     
     return cell;
 }
@@ -80,7 +84,7 @@ static NSString * const reuseIdentifier = @"CityValueCell";
     
     [self dismissViewControllerAnimated:YES completion:nil];
     
-    if (self.delegate) [self.delegate cityValueWasSelected:cell.cityValueLabel.text];
+    if (self.delegate) [self.delegate cityValueWasSelected:cities[indexPath.row]];
 }
 
 #pragma mark - UISearchBarDelegate
@@ -102,9 +106,9 @@ static NSString * const reuseIdentifier = @"CityValueCell";
     }
     else
     {
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF contains [search] %@", searchText];
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF.name contains [search] %@", searchText];
         NSArray *searchResults = [originalCities filteredArrayUsingPredicate:predicate];
-        cities = searchResults;
+        cities = [NSMutableArray arrayWithArray:searchResults];
     }
     
     [tableView reloadData];

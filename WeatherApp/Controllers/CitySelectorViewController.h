@@ -10,14 +10,14 @@
 
 @protocol CitySelectorViewControllerDelegate <NSObject>
 
--(void)cityValueWasSelected:(NSString*)cityValue;
+-(void)cityValueWasSelected:(NSDictionary*)cityInfo;
 
 @end
 
 @interface CitySelectorViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating> {
     IBOutlet UITableView *tableView;
     
-    NSArray *cities, *originalCities;
+    NSMutableArray *cities, *originalCities;
     
     UISearchController *searchController;
 }
