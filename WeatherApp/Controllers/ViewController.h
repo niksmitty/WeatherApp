@@ -16,6 +16,7 @@
     OpenWeatherMapAPIManager *OWMAPIManager;
     
     City *_selectedCity;
+    NSDictionary *_currentWeatherInfo;
 }
 
 @property (weak, nonatomic) IBOutlet UILabel *temperatureValueLabel;

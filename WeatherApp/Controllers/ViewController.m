@@ -46,6 +46,11 @@ static int const OFFSET_WIDTH = 10;
     self.sunsetTimeLabel.text = @"";
     self.semicircleImageView.hidden = YES;
     
+    UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(temperatureValueLabelTapped:)];
+    tapGestureRecognizer.numberOfTapsRequired = 1;
+    [self.temperatureValueLabel addGestureRecognizer:tapGestureRecognizer];
+    self.temperatureValueLabel.userInteractionEnabled = YES;
+    
     NSString *apiKey = @"81d2bde991f9d4ee935b9cc996d94b9c";
     OWMAPIManager = [[OpenWeatherMapAPIManager alloc] initWithApiKey:apiKey];
     
@@ -54,6 +59,12 @@ static int const OFFSET_WIDTH = 10;
     } else {
         [self initializeAndStartLocationManager];
     }
+}
+
+-(void)temperatureValueLabelTapped:(UITapGestureRecognizer*)tgr {
+    self.temperatureValueLabel.text = [self.temperatureValueLabel.text containsString:@"°C"]
+                                    ? [NSString stringWithFormat:@"%.1f°F", [_currentWeatherInfo[@"main"][@"temp_f"] floatValue]]
+                                    : [NSString stringWithFormat:@"%.1f°C", [_currentWeatherInfo[@"main"][@"temp"] floatValue]];
 }
 
 -(void)setSelectedCity:(City *)selectedCity {
@@ -66,6 +77,7 @@ static int const OFFSET_WIDTH = 10;
     if (error) {
         NSLog(@"%@", error);
     } else {
+        _currentWeatherInfo = result;
         self.temperatureValueLabel.text = [NSString stringWithFormat:@"%.1f°C", [result[@"main"][@"temp"] floatValue]];
         self.currentCityLabel.text = [NSString stringWithFormat:@"%@, %@", result[@"name"], result[@"sys"][@"country"]];
         self.sunriseTimeLabel.text = [NSString stringWithFormat:@"Sunrise time: %@", result[@"sys"][@"sunrise"]];

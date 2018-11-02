@@ -15,7 +15,7 @@
 }
 
 +(NSNumber*)convertTemperatureFromKelvinToFahrenheit:(NSNumber*)tempInKelvin {
-    return @([tempInKelvin floatValue] * 9/5 - 273.15);
+    return @([tempInKelvin floatValue] * 9/5 - 459.67);
 }
 
 +(NSNumber*)convertTemperature:(NSNumber*)tempInKelvin toFormat:(OWMTemperatureFormat)tempFormat {
@@ -59,6 +59,9 @@
     NSMutableDictionary *main = [result[@"main"] mutableCopy];
     if (main) {
         newMain[@"temp"] = [Utils convertTemperature:main[@"temp"] toFormat:tempFormat];
+        newMain[@"temp_c"] = [Utils convertTemperature:main[@"temp"] toFormat:OWMTemperatureCelsius];
+        newMain[@"temp_f"] = [Utils convertTemperature:main[@"temp"] toFormat:OWMTemperatureFahrenheit];
+        newMain[@"temp_k"] = [Utils convertTemperature:main[@"temp"] toFormat:OWMTemperatureKelvin];
         newMain[@"temp_min"] = [Utils convertTemperature:main[@"temp_min"] toFormat:tempFormat];
         newMain[@"temp_max"] = [Utils convertTemperature:main[@"temp_max"] toFormat:tempFormat];
         
