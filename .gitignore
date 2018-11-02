@@ -47,7 +47,7 @@ xcuserdata
 !xcshareddata
 !default.xcworkspace
 *.xcworkspacedata
-
+*.xcworkspace
 
 ####
 # Xcode 5
