@@ -30,7 +30,9 @@ static NSString * const reuseIdentifier = @"menuCell";
     
     managedContext = ((AppDelegate*)[[UIApplication sharedApplication] delegate]).persistentContainer.viewContext;
     
-    self.tableView.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"sidebar_background"]];
+    UIImageView *backgroundImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"sidebar_background"]];
+    backgroundImageView.alpha = 0.5;
+    self.tableView.backgroundView = backgroundImageView;
     
     menuItems = [self fetchCitiesFromDB];
 }

@@ -22,9 +22,11 @@ static NSString * const reuseIdentifier = @"CityValueCell";
     
     [tableView registerNib:[UINib nibWithNibName:@"CityValueCell" bundle:nil] forCellReuseIdentifier:reuseIdentifier];
     
-    tableView.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"sidebar_background"]];
+    UIImageView *backgroundImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"sidebar_background"]];
+    backgroundImageView.alpha = 0.5;
+    tableView.backgroundView = backgroundImageView;
     
-    self.navigationItem.title = @"Choose city from list";
+    self.navigationItem.title = @"Choose city";
 
     [self setupSearchController];
     
