@@ -38,7 +38,7 @@ static NSString * const OWMAPIVersion = @"2.5";
     NSString *escapedUrlString = [fullUrlString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]];
     
     [self GET:escapedUrlString parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        NSDictionary *convertedResult = [Utils convertResult:(NSDictionary*)responseObject withCurrentTemperatureFormat:_currentTempFormat];
+        NSDictionary *convertedResult = [Utils convertResult:(NSDictionary*)responseObject withCurrentTemperatureFormat:self->_currentTempFormat];
         if (completion)
             completion(nil, convertedResult);
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
@@ -53,7 +53,7 @@ static NSString * const OWMAPIVersion = @"2.5";
     NSString *escapedUrlString = [fullUrlString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]];
     
     [self GET:escapedUrlString parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        NSDictionary *convertedResult = [Utils convertResult:(NSDictionary*)responseObject withCurrentTemperatureFormat:_currentTempFormat];
+        NSDictionary *convertedResult = [Utils convertResult:(NSDictionary*)responseObject withCurrentTemperatureFormat:self->_currentTempFormat];
         if (completion)
             completion(nil, convertedResult);
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
