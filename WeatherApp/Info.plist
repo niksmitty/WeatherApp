@@ -11,8 +11,6 @@
 	<string>This application wants to use your location</string>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>This application wants to use your location</string>
-	<key>CFBundleDevelopmentRegion</key>
-	<string>en</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>

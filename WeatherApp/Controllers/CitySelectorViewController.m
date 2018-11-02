@@ -26,7 +26,7 @@ static NSString * const reuseIdentifier = @"CityValueCell";
     backgroundImageView.alpha = 0.5;
     tableView.backgroundView = backgroundImageView;
     
-    self.navigationItem.title = @"Choose city";
+    self.navigationItem.title = NSLocalizedString(@"Choose city", @"");
 
     [self setupSearchController];
     
@@ -36,7 +36,7 @@ static NSString * const reuseIdentifier = @"CityValueCell";
 -(void)setupSearchController {
     searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
     searchController.searchResultsUpdater = self;
-    searchController.searchBar.placeholder = @"Search cities";
+    searchController.searchBar.placeholder = NSLocalizedString(@"Search cities", @"");
     [searchController.searchBar sizeToFit];
     tableView.tableHeaderView = searchController.searchBar;
     

@@ -34,7 +34,7 @@ static NSString * const OWMAPIVersion = @"2.5";
 
 -(void)getCurrentWeatherByCity:(NSString*)city andTimeZone:(NSTimeZone*)timeZone withCompletionHandler:(void (^)(NSError *error, NSDictionary *result))completion {
     NSString *urlPart = [NSString stringWithFormat:@"%@%@/weather?q=%@", OWMAPIDataSuffix, OWMAPIVersion, city];
-    NSString *fullUrlString = [NSString stringWithFormat:@"%@&APPID=%@", urlPart, _apiKey];
+    NSString *fullUrlString = [NSString stringWithFormat:@"%@&APPID=%@&lang=%@", urlPart, _apiKey, [[NSLocale currentLocale] languageCode]];
     NSString *escapedUrlString = [fullUrlString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]];
     
     [self GET:escapedUrlString parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
@@ -51,7 +51,7 @@ static NSString * const OWMAPIVersion = @"2.5";
 
 -(void)getCurrentWeatherByCityId:(NSString*)cityId andTimeZone:(NSTimeZone*)timeZone withCompletionHandler:(void (^)(NSError *error, NSDictionary *result))completion {
     NSString *urlPart = [NSString stringWithFormat:@"%@%@/weather?id=%@", OWMAPIDataSuffix, OWMAPIVersion, cityId];
-    NSString *fullUrlString = [NSString stringWithFormat:@"%@&APPID=%@", urlPart, _apiKey];
+    NSString *fullUrlString = [NSString stringWithFormat:@"%@&APPID=%@&lang=%@", urlPart, _apiKey, [[NSLocale currentLocale] languageCode]];
     NSString *escapedUrlString = [fullUrlString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]];
     
     [self GET:escapedUrlString parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {

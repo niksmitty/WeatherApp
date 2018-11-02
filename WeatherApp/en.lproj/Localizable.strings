@@ -1,0 +1,13 @@
+/* 
+  Localizable.strings
+  WeatherApp
+
+  Created by Никита on 02/11/2018.
+  Copyright © 2018 Nikita Votyakov. All rights reserved.
+*/
+
+"Sunrise time" = "Sunrise";
+"Sunset time" = "Sunset";
+"Choose city" = "Choose city";
+"Search cities" = "Enter city's name...";
+"Cancel" = "Cancel";

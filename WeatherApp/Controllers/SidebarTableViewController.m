@@ -156,7 +156,10 @@ static NSString * const reuseIdentifier = @"menuCell";
 
 -(UIViewController*)presentationController:(UIPresentationController *)controller viewControllerForAdaptivePresentationStyle:(UIModalPresentationStyle)style {
     UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:controller.presentedViewController];
-    UIBarButtonItem *bbItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(dismiss)];
+    UIBarButtonItem *bbItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Cancel", @"")
+                                                               style:UIBarButtonItemStyleDone
+                                                              target:self
+                                                              action:@selector(dismiss)];
     bbItem.tintColor = [UIColor blackColor];
     navController.topViewController.navigationItem.rightBarButtonItem = bbItem;
     return navController;

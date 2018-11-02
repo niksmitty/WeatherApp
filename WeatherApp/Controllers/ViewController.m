@@ -80,8 +80,8 @@ static int const OFFSET_WIDTH = 10;
         _currentWeatherInfo = result;
         self.temperatureValueLabel.text = [NSString stringWithFormat:@"%.1f°C", [result[@"main"][@"temp"] floatValue]];
         self.currentCityLabel.text = [NSString stringWithFormat:@"%@, %@", result[@"name"], result[@"sys"][@"country"]];
-        self.sunriseTimeLabel.text = [NSString stringWithFormat:@"Sunrise time: %@", result[@"sys"][@"sunrise"]];
-        self.sunsetTimeLabel.text = [NSString stringWithFormat:@"Sunset time: %@", result[@"sys"][@"sunset"]];
+        self.sunriseTimeLabel.text = [NSString stringWithFormat:@"%@: %@", NSLocalizedString(@"Sunrise time", @""), result[@"sys"][@"sunrise"]];
+        self.sunsetTimeLabel.text = [NSString stringWithFormat:@"%@: %@", NSLocalizedString(@"Sunset time", @""), result[@"sys"][@"sunset"]];
         
         self.semicircleImageView.hidden = NO;
         
