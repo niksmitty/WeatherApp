@@ -149,12 +149,19 @@ static NSString * const reuseIdentifier = @"menuCell";
 #pragma mark - Popover Presentation Controller Delegate
 
 -(UIModalPresentationStyle)adaptivePresentationStyleForPresentationController:(UIPresentationController *)controller {
-    return UIModalPresentationPopover;
+    return UIModalPresentationFullScreen;
 }
 
 -(UIViewController*)presentationController:(UIPresentationController *)controller viewControllerForAdaptivePresentationStyle:(UIModalPresentationStyle)style {
     UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:controller.presentedViewController];
+    UIBarButtonItem *bbItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(dismiss)];
+    bbItem.tintColor = [UIColor blackColor];
+    navController.topViewController.navigationItem.rightBarButtonItem = bbItem;
     return navController;
+}
+
+-(void)dismiss {
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - City Selector View Controller delegate
