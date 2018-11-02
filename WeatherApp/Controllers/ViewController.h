@@ -9,12 +9,13 @@
 #import <UIKit/UIKit.h>
 #import <CoreLocation/CoreLocation.h>
 #import "OpenWeatherMapAPIManager.h"
+#import "City.h"
 
 @interface ViewController : UIViewController <CLLocationManagerDelegate> {
     CLLocationManager *locationManager;
     OpenWeatherMapAPIManager *OWMAPIManager;
     
-    NSString *_selectedCityId;
+    City *_selectedCity;
 }
 
 @property (weak, nonatomic) IBOutlet UILabel *temperatureValueLabel;
@@ -31,6 +32,6 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *menuButton;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *locatingButton;
 
-@property (strong, nonatomic) NSString *selectedCityId;
+@property (strong, nonatomic) City *selectedCity;
 
 @end

@@ -49,10 +49,13 @@ static NSString * const reuseIdentifier = @"menuCell";
     [self presentViewController:citySVC animated:YES completion:nil];
 }
 
--(void)saveDataIntoDBWithCityInfo:(NSDictionary*)cityInfo {
+-(void)saveDataIntoDBWithCityInfo:(City*)cityInfo {
     NSManagedObject *cityObject = [NSEntityDescription insertNewObjectForEntityForName:@"City" inManagedObjectContext:managedContext];
-    [cityObject setValue:cityInfo[@"id"] forKey:@"id"];
-    [cityObject setValue:cityInfo[@"name"] forKey:@"name"];
+    [cityObject setValue:cityInfo.identifier forKey:@"id"];
+    [cityObject setValue:cityInfo.name forKey:@"name"];
+    [cityObject setValue:cityInfo.country forKey:@"country"];
+    [cityObject setValue:cityInfo.longitude forKey:@"lon"];
+    [cityObject setValue:cityInfo.latitude forKey:@"lat"];
     
     NSError *error = nil;
     if ([managedContext save:&error]) {
@@ -102,7 +105,7 @@ static NSString * const reuseIdentifier = @"menuCell";
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     MenuTableViewCell *cell = (MenuTableViewCell*)[tableView dequeueReusableCellWithIdentifier:reuseIdentifier forIndexPath:indexPath];
-    cell.cityLabel.text = [menuItems[indexPath.row] valueForKey:@"name"];
+    cell.cityLabel.text = [NSString stringWithFormat:@"%@, %@", [menuItems[indexPath.row] valueForKey:@"name"], [menuItems[indexPath.row] valueForKey:@"country"]];
     return cell;
 }
 
@@ -140,7 +143,7 @@ static NSString * const reuseIdentifier = @"menuCell";
     NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
     UINavigationController *navController = segue.destinationViewController;
     ViewController *mainVC = [navController childViewControllers].firstObject;
-    mainVC.selectedCityId = [menuItems[indexPath.row] valueForKey:@"id"];
+    mainVC.selectedCity = [City cityFromManagedObject:menuItems[indexPath.row]];
 }
 
 #pragma mark - Popover Presentation Controller Delegate
@@ -156,7 +159,7 @@ static NSString * const reuseIdentifier = @"menuCell";
 
 #pragma mark - City Selector View Controller delegate
 
--(void)cityValueWasSelected:(NSDictionary*)cityInfo {
+-(void)cityValueWasSelected:(City*)cityInfo {
     [self saveDataIntoDBWithCityInfo:cityInfo];
     [self.tableView reloadData];
 }

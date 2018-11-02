@@ -22,5 +22,6 @@
 @property (nonatomic, strong) NSString *thoroughfare;
 @property (nonatomic, strong) NSString *subThoroughfare;
 @property (nonatomic, strong) NSString *administrativeArea;
+@property (nonatomic, strong) NSTimeZone *timeZone;
 
 @end

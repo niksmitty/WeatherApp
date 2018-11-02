@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AB20B074218C595E00D6704B /* City.m in Sources */ = {isa = PBXBuildFile; fileRef = AB20B073218C595E00D6704B /* City.m */; };
 		AB25BA352017647700D59347 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = AB25BA342017647700D59347 /* main.m */; };
 		AB25BA382017647700D59347 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AB25BA372017647700D59347 /* AppDelegate.m */; };
 		AB25BA3B2017647700D59347 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB25BA3A2017647700D59347 /* ViewController.m */; };
@@ -33,6 +34,8 @@
 /* Begin PBXFileReference section */
 		293432A4B33BFAF36F965C98 /* Pods-WeatherApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WeatherApp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WeatherApp/Pods-WeatherApp.debug.xcconfig"; sourceTree = "<group>"; };
 		4F08F29D1F5368B1C6999D3B /* Pods-WeatherApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WeatherApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-WeatherApp/Pods-WeatherApp.release.xcconfig"; sourceTree = "<group>"; };
+		AB20B072218C595E00D6704B /* City.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = City.h; sourceTree = "<group>"; };
+		AB20B073218C595E00D6704B /* City.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = City.m; sourceTree = "<group>"; };
 		AB25BA302017647700D59347 /* WeatherApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WeatherApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB25BA342017647700D59347 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		AB25BA362017647700D59347 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -151,6 +154,8 @@
 			children = (
 				AB25BA552018869400D59347 /* LocationInfo.h */,
 				AB25BA562018869400D59347 /* LocationInfo.m */,
+				AB20B072218C595E00D6704B /* City.h */,
+				AB20B073218C595E00D6704B /* City.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -308,6 +313,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AB20B074218C595E00D6704B /* City.m in Sources */,
 				ABB81136203B10E10047D722 /* CitySelectorViewController.m in Sources */,
 				AB25BA412017647700D59347 /* WeatherApp.xcdatamodeld in Sources */,
 				AB25BA502018713D00D59347 /* OpenWeatherMapAPIManager.m in Sources */,

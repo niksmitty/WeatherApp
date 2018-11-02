@@ -20,7 +20,7 @@ static int const OFFSET_WIDTH = 10;
 
 @implementation ViewController
 
-- (void)viewDidLoad {
+-(void)viewDidLoad {
     [super viewDidLoad];
     
     [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
@@ -49,15 +49,15 @@ static int const OFFSET_WIDTH = 10;
     NSString *apiKey = @"81d2bde991f9d4ee935b9cc996d94b9c";
     OWMAPIManager = [[OpenWeatherMapAPIManager alloc] initWithApiKey:apiKey];
     
-    if (_selectedCityId) {
-        [self refreshCurrentWeatherInformationByCityId:_selectedCityId];
+    if (_selectedCity) {
+        [self refreshCurrentWeatherInformationByCityId:_selectedCity];
     } else {
         [self initializeAndStartLocationManager];
     }
 }
 
--(void)setSelectedCityId:(NSString *)selectedCityId {
-    _selectedCityId = selectedCityId;
+-(void)setSelectedCity:(City *)selectedCity {
+    _selectedCity = selectedCity;
     
     [self.activity startAnimating];
 }
@@ -79,15 +79,17 @@ static int const OFFSET_WIDTH = 10;
     }
 }
 
--(void)refreshCurrentWeatherInformationByCity:(NSString*)city {
-    [OWMAPIManager getCurrentWeatherByCity:city withCompletionHandler:^(NSError *error, NSDictionary *result) {
+-(void)refreshCurrentWeatherInformationByLocationInfo:(LocationInfo*)locationInfo {
+    [OWMAPIManager getCurrentWeatherByCity:locationInfo.locality andTimeZone:locationInfo.timeZone withCompletionHandler:^(NSError *error, NSDictionary *result) {
         [self placeData:result withError:error];
     }];
 }
 
--(void)refreshCurrentWeatherInformationByCityId:(NSString*)cityId {
-    [OWMAPIManager getCurrentWeatherByCityId:cityId withCompletionHandler:^(NSError *error, NSDictionary *result) {
-        [self placeData:result withError:error];
+-(void)refreshCurrentWeatherInformationByCityId:(City*)city {
+    [self getInfoOfLocation:[[CLLocation alloc] initWithLatitude:[city.latitude doubleValue] longitude:[city.longitude doubleValue]] completion:^(LocationInfo *locationInfo) {
+        [self->OWMAPIManager getCurrentWeatherByCityId:city.identifier andTimeZone:locationInfo.timeZone withCompletionHandler:^(NSError *error, NSDictionary *result) {
+            [self placeData:result withError:error];
+        }];
     }];
 }
 
@@ -104,6 +106,7 @@ static int const OFFSET_WIDTH = 10;
                 locationInfo.thoroughfare = [placemark thoroughfare];
                 locationInfo.locality = [placemark locality];
                 locationInfo.administrativeArea = [placemark administrativeArea];
+                locationInfo.timeZone = [placemark timeZone];
                 
                 if (completionHandler)
                     completionHandler(locationInfo);
@@ -181,7 +184,7 @@ static int const OFFSET_WIDTH = 10;
     locationManager = nil;
     CLLocation *newLocation = [locations lastObject];
     [self getInfoOfLocation:newLocation completion:^(LocationInfo *locationInfo) {
-        [self refreshCurrentWeatherInformationByCity:locationInfo.locality];
+        [self refreshCurrentWeatherInformationByLocationInfo:locationInfo];
     }];
 }
 

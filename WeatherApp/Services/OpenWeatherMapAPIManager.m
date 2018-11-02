@@ -32,13 +32,15 @@ static NSString * const OWMAPIVersion = @"2.5";
     return self;
 }
 
--(void)getCurrentWeatherByCity:(NSString*)city withCompletionHandler:(void (^)(NSError *error, NSDictionary *result))completion {
+-(void)getCurrentWeatherByCity:(NSString*)city andTimeZone:(NSTimeZone*)timeZone withCompletionHandler:(void (^)(NSError *error, NSDictionary *result))completion {
     NSString *urlPart = [NSString stringWithFormat:@"%@%@/weather?q=%@", OWMAPIDataSuffix, OWMAPIVersion, city];
     NSString *fullUrlString = [NSString stringWithFormat:@"%@&APPID=%@", urlPart, _apiKey];
     NSString *escapedUrlString = [fullUrlString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]];
     
     [self GET:escapedUrlString parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        NSDictionary *convertedResult = [Utils convertResult:(NSDictionary*)responseObject withCurrentTemperatureFormat:self->_currentTempFormat];
+        NSMutableDictionary *newResponse = [NSMutableDictionary dictionaryWithDictionary:(NSDictionary*)responseObject];
+        [newResponse setObject:timeZone forKey:@"timeZone"];
+        NSDictionary *convertedResult = [Utils convertResult:newResponse withCurrentTemperatureFormat:self->_currentTempFormat];
         if (completion)
             completion(nil, convertedResult);
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
@@ -47,13 +49,15 @@ static NSString * const OWMAPIVersion = @"2.5";
     }];
 }
 
--(void)getCurrentWeatherByCityId:(NSString*)cityId withCompletionHandler:(void (^)(NSError *error, NSDictionary *result))completion {
+-(void)getCurrentWeatherByCityId:(NSString*)cityId andTimeZone:(NSTimeZone*)timeZone withCompletionHandler:(void (^)(NSError *error, NSDictionary *result))completion {
     NSString *urlPart = [NSString stringWithFormat:@"%@%@/weather?id=%@", OWMAPIDataSuffix, OWMAPIVersion, cityId];
     NSString *fullUrlString = [NSString stringWithFormat:@"%@&APPID=%@", urlPart, _apiKey];
     NSString *escapedUrlString = [fullUrlString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]];
     
     [self GET:escapedUrlString parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        NSDictionary *convertedResult = [Utils convertResult:(NSDictionary*)responseObject withCurrentTemperatureFormat:self->_currentTempFormat];
+        NSMutableDictionary *newResponse = [NSMutableDictionary dictionaryWithDictionary:(NSDictionary*)responseObject];
+        [newResponse setObject:timeZone forKey:@"timeZone"];
+        NSDictionary *convertedResult = [Utils convertResult:newResponse withCurrentTemperatureFormat:self->_currentTempFormat];
         if (completion)
             completion(nil, convertedResult);
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {

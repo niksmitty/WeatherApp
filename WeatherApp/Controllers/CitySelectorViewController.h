@@ -7,17 +7,18 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "City.h"
 
 @protocol CitySelectorViewControllerDelegate <NSObject>
 
--(void)cityValueWasSelected:(NSDictionary*)cityInfo;
+-(void)cityValueWasSelected:(City*)cityInfo;
 
 @end
 
 @interface CitySelectorViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating> {
     IBOutlet UITableView *tableView;
     
-    NSMutableArray *cities, *originalCities;
+    NSMutableArray<City *> *cities, *originalCities;
     
     UISearchController *searchController;
 }

@@ -32,13 +32,13 @@
     }
 }
 
-+(NSString*)convertUnixTimestampToDateString:(NSNumber*)unixTime {
++(NSString*)convertUnixTimestampToDateString:(NSNumber*)unixTime withTimeZone:(NSTimeZone*)timeZone {
     NSTimeInterval timeInterval = [unixTime doubleValue];
     NSDate *date = [NSDate dateWithTimeIntervalSince1970:timeInterval];
     
     NSDateFormatter *formatter = [NSDateFormatter new];
-    [formatter setLocale:[NSLocale currentLocale]];
-    [formatter setDateFormat:@"dd.MM.yyyy H:m"];
+    [formatter setTimeZone:timeZone];
+    [formatter setDateFormat:@"dd.MM.yyyy HH:mm"];
     
     return [formatter stringFromDate:date];
 }
@@ -68,8 +68,8 @@
     NSMutableDictionary *sys = [result[@"sys"] mutableCopy];
     if (sys) {
         newSys[@"country"] = sys[@"country"];
-        newSys[@"sunrise"] = [Utils convertUnixTimestampToDateString:sys[@"sunrise"]];
-        newSys[@"sunset"] = [Utils convertUnixTimestampToDateString:sys[@"sunset"]];
+        newSys[@"sunrise"] = [Utils convertUnixTimestampToDateString:sys[@"sunrise"] withTimeZone:result[@"timeZone"]];
+        newSys[@"sunset"] = [Utils convertUnixTimestampToDateString:sys[@"sunset"] withTimeZone:result[@"timeZone"]];
         
         newDict[@"sys"] = newSys;
     }

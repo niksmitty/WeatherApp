@@ -54,7 +54,7 @@ static NSString * const reuseIdentifier = @"CityValueCell";
         NSArray *citiesListObject = [NSJSONSerialization JSONObjectWithData:[citiesListJsonString dataUsingEncoding:NSUTF8StringEncoding] options:0 error:&error];
         originalCities = cities = [NSMutableArray new];
         for (NSDictionary *cityInfo in citiesListObject) {
-            [cities addObject:@{@"id":[cityInfo[@"id"] stringValue], @"name": cityInfo[@"name"]}];
+            [cities addObject:[City cityFromDictionary:cityInfo]];
         }
         originalCities = cities;
     }
@@ -69,7 +69,7 @@ static NSString * const reuseIdentifier = @"CityValueCell";
 -(UITableViewCell*)tableView:(UITableView *)_tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     CityValueCell *cell = [_tableView dequeueReusableCellWithIdentifier:reuseIdentifier forIndexPath:indexPath];
     
-    cell.cityValueLabel.text = cities[indexPath.row][@"name"];
+    cell.cityValueLabel.text = [NSString stringWithFormat:@"%@, %@", cities[indexPath.row].name, cities[indexPath.row].country];
     
     return cell;
 }
