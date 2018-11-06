@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CitySelectorViewController">
             <connections>
+                <outlet property="activity" destination="Jbb-IP-dGd" id="RTs-qi-oeZ"/>
+                <outlet property="notFoundLabel" destination="hFp-Ps-Dct" id="XPV-7R-S70"/>
                 <outlet property="tableView" destination="Vwh-V9-BLU" id="zqf-QW-1nO"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -28,13 +30,27 @@
                         <outlet property="delegate" destination="-1" id="pTa-lB-4kX"/>
                     </connections>
                 </tableView>
+                <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="Jbb-IP-dGd">
+                    <rect key="frame" x="177.5" y="323.5" width="20" height="20"/>
+                    <color key="color" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                </activityIndicatorView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Not found..." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hFp-Ps-Dct">
+                    <rect key="frame" x="142.5" y="323" width="90.5" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="Vwh-V9-BLU" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="2tQ-BT-HYy"/>
+                <constraint firstItem="Jbb-IP-dGd" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="J51-Td-xVq"/>
+                <constraint firstItem="hFp-Ps-Dct" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="O6d-Lx-gxZ"/>
+                <constraint firstItem="Jbb-IP-dGd" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="SoY-gQ-6u9"/>
                 <constraint firstItem="Vwh-V9-BLU" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="UOD-Mj-aJJ"/>
                 <constraint firstAttribute="trailing" secondItem="Vwh-V9-BLU" secondAttribute="trailing" id="UXn-En-pgx"/>
                 <constraint firstAttribute="bottom" secondItem="Vwh-V9-BLU" secondAttribute="bottom" id="coB-iG-OS4"/>
+                <constraint firstItem="hFp-Ps-Dct" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="rfC-rO-0HY"/>
             </constraints>
             <point key="canvasLocation" x="24.5" y="52.5"/>
         </view>

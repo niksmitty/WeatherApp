@@ -24,9 +24,9 @@
 		AB48B0F1201F5EFE00938235 /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB48B0F0201F5EFE00938235 /* SWRevealViewController.m */; };
 		AB48B0F4201F677300938235 /* SidebarTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB48B0F3201F677300938235 /* SidebarTableViewController.m */; };
 		AB48B0F82020791E00938235 /* MenuTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AB48B0F72020791E00938235 /* MenuTableViewCell.m */; };
+		ABB6169A2191B06F00EF2D3A /* CitySelectorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = ABB6169C2191B06F00EF2D3A /* CitySelectorViewController.xib */; };
 		ABB81132203B0E9F0047D722 /* cityList.json in Resources */ = {isa = PBXBuildFile; fileRef = ABB81131203B0E9F0047D722 /* cityList.json */; };
 		ABB81136203B10E10047D722 /* CitySelectorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABB81134203B10E10047D722 /* CitySelectorViewController.m */; };
-		ABB81137203B10E10047D722 /* CitySelectorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = ABB81135203B10E10047D722 /* CitySelectorViewController.xib */; };
 		ABB8113B203B13CD0047D722 /* CityValueCell.m in Sources */ = {isa = PBXBuildFile; fileRef = ABB81139203B13CD0047D722 /* CityValueCell.m */; };
 		ABB8113C203B13CD0047D722 /* CityValueCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = ABB8113A203B13CD0047D722 /* CityValueCell.xib */; };
 		FF0E6DFC1A746DA4F8C5CDF3 /* libPods-WeatherApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CEEBB954B679B1548DA91682 /* libPods-WeatherApp.a */; };
@@ -69,10 +69,12 @@
 		AB48B0F3201F677300938235 /* SidebarTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SidebarTableViewController.m; sourceTree = "<group>"; };
 		AB48B0F62020791E00938235 /* MenuTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuTableViewCell.h; sourceTree = "<group>"; };
 		AB48B0F72020791E00938235 /* MenuTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuTableViewCell.m; sourceTree = "<group>"; };
+		ABB6169B2191B06F00EF2D3A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/CitySelectorViewController.xib; sourceTree = "<group>"; };
+		ABB6169E2191B07500EF2D3A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/CitySelectorViewController.strings; sourceTree = "<group>"; };
+		ABB616A02191B09F00EF2D3A /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/CitySelectorViewController.strings; sourceTree = "<group>"; };
 		ABB81131203B0E9F0047D722 /* cityList.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = cityList.json; sourceTree = "<group>"; };
 		ABB81133203B10E10047D722 /* CitySelectorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CitySelectorViewController.h; sourceTree = "<group>"; };
 		ABB81134203B10E10047D722 /* CitySelectorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CitySelectorViewController.m; sourceTree = "<group>"; };
-		ABB81135203B10E10047D722 /* CitySelectorViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CitySelectorViewController.xib; sourceTree = "<group>"; };
 		ABB81138203B13CD0047D722 /* CityValueCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CityValueCell.h; sourceTree = "<group>"; };
 		ABB81139203B13CD0047D722 /* CityValueCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CityValueCell.m; sourceTree = "<group>"; };
 		ABB8113A203B13CD0047D722 /* CityValueCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CityValueCell.xib; sourceTree = "<group>"; };
@@ -104,6 +106,7 @@
 			children = (
 				AB25BA3C2017647700D59347 /* Main.storyboard */,
 				AB25BA442017647700D59347 /* LaunchScreen.storyboard */,
+				ABB6169C2191B06F00EF2D3A /* CitySelectorViewController.xib */,
 				AB20B077218C8B0200D6704B /* Localizable.strings */,
 			);
 			path = Localization;
@@ -186,7 +189,6 @@
 				AB48B0F3201F677300938235 /* SidebarTableViewController.m */,
 				ABB81133203B10E10047D722 /* CitySelectorViewController.h */,
 				ABB81134203B10E10047D722 /* CitySelectorViewController.m */,
-				ABB81135203B10E10047D722 /* CitySelectorViewController.xib */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -297,7 +299,7 @@
 				AB25BA5C201A02B100D59347 /* .gitignore in Resources */,
 				ABB81132203B0E9F0047D722 /* cityList.json in Resources */,
 				AB20B079218C8B0200D6704B /* Localizable.strings in Resources */,
-				ABB81137203B10E10047D722 /* CitySelectorViewController.xib in Resources */,
+				ABB6169A2191B06F00EF2D3A /* CitySelectorViewController.xib in Resources */,
 				AB25BA462017647700D59347 /* LaunchScreen.storyboard in Resources */,
 				AB25BA432017647700D59347 /* Assets.xcassets in Resources */,
 				AB25BA3E2017647700D59347 /* Main.storyboard in Resources */,
@@ -379,6 +381,16 @@
 				AB20B081218C9CBC00D6704B /* en */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		ABB6169C2191B06F00EF2D3A /* CitySelectorViewController.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				ABB6169B2191B06F00EF2D3A /* Base */,
+				ABB6169E2191B07500EF2D3A /* en */,
+				ABB616A02191B09F00EF2D3A /* ru */,
+			);
+			name = CitySelectorViewController.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

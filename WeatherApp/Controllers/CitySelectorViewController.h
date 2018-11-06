@@ -16,7 +16,9 @@
 @end
 
 @interface CitySelectorViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating> {
-    IBOutlet UITableView *tableView;
+    __weak IBOutlet UITableView *tableView;
+    __weak IBOutlet UIActivityIndicatorView *activity;
+    __weak IBOutlet UILabel *notFoundLabel;
     
     NSMutableArray<City *> *cities, *originalCities;
     

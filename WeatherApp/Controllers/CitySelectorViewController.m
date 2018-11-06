@@ -9,7 +9,9 @@
 #import "CitySelectorViewController.h"
 #import "CityValueCell.h"
 
-@interface CitySelectorViewController ()
+@interface CitySelectorViewController () {
+    BOOL isCitiesListLoading;
+}
 
 @end
 
@@ -17,8 +19,13 @@
 
 static NSString * const reuseIdentifier = @"CityValueCell";
 
+#pragma mark - View lifecycle
+
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    isCitiesListLoading = NO;
+    notFoundLabel.hidden = YES;
     
     [tableView registerNib:[UINib nibWithNibName:@"CityValueCell" bundle:nil] forCellReuseIdentifier:reuseIdentifier];
     
@@ -29,10 +36,7 @@ static NSString * const reuseIdentifier = @"CityValueCell";
     self.navigationItem.title = NSLocalizedString(@"Choose city", @"");
 
     [self setupSearchController];
-    
-    [self loadCitiesList];
 }
-
 -(void)setupSearchController {
     searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
     searchController.searchResultsUpdater = self;
@@ -46,6 +50,8 @@ static NSString * const reuseIdentifier = @"CityValueCell";
     searchController.definesPresentationContext = YES;
 }
 
+#pragma mark - Data loading and filtering methods
+
 -(void)loadCitiesList {
     NSError *error;
     NSString *citiesListFilePath = [[NSBundle mainBundle] pathForResource:@"cityList" ofType:@"json"];
@@ -54,12 +60,29 @@ static NSString * const reuseIdentifier = @"CityValueCell";
                                                                   error:&error];
     if (!error) {
         NSArray *citiesListObject = [NSJSONSerialization JSONObjectWithData:[citiesListJsonString dataUsingEncoding:NSUTF8StringEncoding] options:0 error:&error];
-        originalCities = cities = [NSMutableArray new];
-        for (NSDictionary *cityInfo in citiesListObject) {
-            [cities addObject:[City cityFromDictionary:cityInfo]];
+        if (!error) {
+            citiesListObject = [citiesListObject sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES]]];
+            originalCities = cities = [NSMutableArray new];
+            for (NSDictionary *cityInfo in citiesListObject) {
+                [cities addObject:[City cityFromDictionary:cityInfo]];
+            }
+        } else {
+            NSLog(@"%@", error.localizedDescription);
         }
-        originalCities = cities;
+    } else {
+        NSLog(@"%@", error.localizedDescription);
     }
+}
+
+-(void)filterCitiesBySearchText:(NSString*)searchText {
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF.name contains [search] %@", searchText];
+    NSArray *searchResults = [originalCities filteredArrayUsingPredicate:predicate];
+    cities = [NSMutableArray arrayWithArray:searchResults];
+    notFoundLabel.hidden = cities.count == 0 ? NO : YES;
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self->tableView reloadData];
+    });
 }
 
 #pragma mark - Table View datasource
@@ -100,20 +123,34 @@ static NSString * const reuseIdentifier = @"CityValueCell";
 #pragma mark - UISearchResultsUpdating
 
 -(void)updateSearchResultsForSearchController:(UISearchController *)_searchController {
-    NSString *searchText = _searchController.searchBar.text;
-    
-    if ([searchText length] == 0)
-    {
-        cities = originalCities;
+    if (_searchController.searchBar.text.length != 0) {
+        if (!isCitiesListLoading) {
+            if (!originalCities) {
+                
+                isCitiesListLoading = YES;
+                notFoundLabel.hidden = YES;
+                [activity startAnimating];
+                
+                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+                    
+                    [self loadCitiesList];
+                    self->isCitiesListLoading = NO;
+                    
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [self->activity stopAnimating];
+                        [self filterCitiesBySearchText:_searchController.searchBar.text];
+                    });
+                    
+                });
+            } else {
+                [self filterCitiesBySearchText:_searchController.searchBar.text];
+            }
+        }
+    } else {
+        cities = nil;
+        notFoundLabel.hidden = YES;
+        [tableView reloadData];
     }
-    else
-    {
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF.name contains [search] %@", searchText];
-        NSArray *searchResults = [originalCities filteredArrayUsingPredicate:predicate];
-        cities = [NSMutableArray arrayWithArray:searchResults];
-    }
-    
-    [tableView reloadData];
 }
 
 @end
