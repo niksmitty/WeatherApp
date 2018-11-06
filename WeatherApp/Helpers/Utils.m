@@ -38,7 +38,7 @@
     
     NSDateFormatter *formatter = [NSDateFormatter new];
     [formatter setTimeZone:timeZone];
-    [formatter setDateFormat:@"dd.MM.yyyy HH:mm"];
+    [formatter setDateFormat:@"HH:mm"];
     
     return [formatter stringFromDate:date];
 }
