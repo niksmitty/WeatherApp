@@ -57,7 +57,9 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="semi-circle_new" translatesAutoresizingMaskIntoConstraints="NO" id="8kp-0X-9Kn">
                                 <rect key="frame" x="40" y="373.5" width="295" height="128"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="128" id="0MX-7f-keb"/>
+                                    <constraint firstAttribute="height" constant="128" id="0MX-7f-keb">
+                                        <variation key="heightClass=compact" constant="100"/>
+                                    </constraint>
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N0w-Tf-C95">
