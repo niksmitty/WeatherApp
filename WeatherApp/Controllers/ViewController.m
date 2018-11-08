@@ -54,6 +54,8 @@ static int const OFFSET_WIDTH = 10;
     NSString *apiKey = @"81d2bde991f9d4ee935b9cc996d94b9c";
     OWMAPIManager = [[OpenWeatherMapAPIManager alloc] initWithApiKey:apiKey];
     
+    self.view.backgroundColor = [UIColor colorWithRed:209./255. green:210./255. blue:213./255. alpha:1.];
+    
     if (_selectedCity) {
         [self refreshCurrentWeatherInformationByCityId:_selectedCity];
     } else {
@@ -160,6 +162,16 @@ static int const OFFSET_WIDTH = 10;
 -(void)placeWeatherConditionIcons:(NSArray*)weatherConditions {
     int currentIconIndex = 0;
     int iconsTotal = (int)[weatherConditions count];
+    
+    if (iconsTotal != 0) {
+        UIImage *image = [UIImage imageNamed:weatherConditions[0][@"icon"]];
+        if (image) {
+            _backgroundImageView.image = image;
+        } else {
+            _backgroundImageView.image = [UIImage imageNamed:@"background_clouds"];
+        }
+    }
+    
     for (NSDictionary *condDict in weatherConditions) {
         [self createIconViewWithIconURL:[OWMAPIManager getIconFullUrlWithIconId:condDict[@"icon"]] description:condDict[@"description"] iconsTotal:iconsTotal andCurrentIconIndex:currentIconIndex];
         currentIconIndex++;

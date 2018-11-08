@@ -26,6 +26,7 @@
 
 @property (weak, nonatomic) IBOutlet UIView *weatherIconsView;
 
+@property (weak, nonatomic) IBOutlet UIImageView *backgroundImageView;
 @property (weak, nonatomic) IBOutlet UIImageView *semicircleImageView;
 
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activity;

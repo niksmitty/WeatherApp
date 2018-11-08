@@ -21,7 +21,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="background_clouds" translatesAutoresizingMaskIntoConstraints="NO" id="yNf-ov-cLB">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="yNf-ov-cLB">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LD1-VQ-aQk">
@@ -147,6 +147,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="activity" destination="Vuc-5g-UNn" id="Q3z-2m-XR0"/>
+                        <outlet property="backgroundImageView" destination="yNf-ov-cLB" id="KTn-cX-ebA"/>
                         <outlet property="currentCityLabel" destination="cZ6-gO-5mp" id="9fB-ig-TIK"/>
                         <outlet property="locatingButton" destination="0an-OT-Gwx" id="3x6-Q3-pZB"/>
                         <outlet property="menuButton" destination="ULe-9D-SuA" id="Gsr-Xi-Ccq"/>
@@ -290,7 +291,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="background_clouds" width="1124" height="747"/>
         <image name="location_icon_new" width="25" height="25"/>
         <image name="menu_button" width="14" height="10"/>
         <image name="semi-circle_new" width="512" height="293"/>
