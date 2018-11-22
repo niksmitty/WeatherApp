@@ -37,6 +37,7 @@ static NSString * const reuseIdentifier = @"CityValueCell";
 
     [self setupSearchController];
 }
+
 -(void)setupSearchController {
     searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
     searchController.searchResultsUpdater = self;
@@ -75,7 +76,7 @@ static NSString * const reuseIdentifier = @"CityValueCell";
 }
 
 -(void)filterCitiesBySearchText:(NSString*)searchText {
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF.name contains [search] %@", searchText];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF.name BEGINSWITH [search] %@", searchText];
     NSArray *searchResults = [originalCities filteredArrayUsingPredicate:predicate];
     cities = [NSMutableArray arrayWithArray:searchResults];
     notFoundLabel.hidden = cities.count == 0 ? NO : YES;

@@ -20,6 +20,8 @@ static int const OFFSET_WIDTH = 10;
 
 @implementation ViewController
 
+#pragma mark - View lifecycle
+
 -(void)viewDidLoad {
     [super viewDidLoad];
     
@@ -63,11 +65,7 @@ static int const OFFSET_WIDTH = 10;
     }
 }
 
--(void)temperatureValueLabelTapped:(UITapGestureRecognizer*)tgr {
-    self.temperatureValueLabel.text = [self.temperatureValueLabel.text containsString:@"°C"]
-                                    ? [NSString stringWithFormat:@"%.1f°F", [_currentWeatherInfo[@"main"][@"temp_f"] floatValue]]
-                                    : [NSString stringWithFormat:@"%.1f°C", [_currentWeatherInfo[@"main"][@"temp"] floatValue]];
-}
+#pragma mark - Setters
 
 -(void)setSelectedCity:(City *)selectedCity {
     _selectedCity = selectedCity;
@@ -75,36 +73,19 @@ static int const OFFSET_WIDTH = 10;
     [self.activity startAnimating];
 }
 
--(void)placeData:(NSDictionary*)result withError:(NSError*)error {
-    if (error) {
-        NSLog(@"%@", error);
-    } else {
-        _currentWeatherInfo = result;
-        self.temperatureValueLabel.text = [NSString stringWithFormat:@"%.1f°C", [result[@"main"][@"temp"] floatValue]];
-        self.currentCityLabel.text = [NSString stringWithFormat:@"%@, %@", result[@"name"], result[@"sys"][@"country"]];
-        self.sunriseTimeLabel.text = [NSString stringWithFormat:@"%@: %@", NSLocalizedString(@"Sunrise time", @""), result[@"sys"][@"sunrise"]];
-        self.sunsetTimeLabel.text = [NSString stringWithFormat:@"%@: %@", NSLocalizedString(@"Sunset time", @""), result[@"sys"][@"sunset"]];
-        
-        self.semicircleImageView.hidden = NO;
-        
-        [self placeWeatherConditionIcons:result[@"weather"]];
-        
-        [self.activity stopAnimating];
+#pragma mark - Location methods
+
+-(void)initializeAndStartLocationManager {
+    locationManager = [[CLLocationManager alloc] init];
+    locationManager.delegate = self;
+    locationManager.distanceFilter = kCLDistanceFilterNone;
+    locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+    
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0) {
+        [locationManager requestWhenInUseAuthorization];
     }
-}
-
--(void)refreshCurrentWeatherInformationByLocationInfo:(LocationInfo*)locationInfo {
-    [OWMAPIManager getCurrentWeatherByCity:locationInfo.locality andTimeZone:locationInfo.timeZone withCompletionHandler:^(NSError *error, NSDictionary *result) {
-        [self placeData:result withError:error];
-    }];
-}
-
--(void)refreshCurrentWeatherInformationByCityId:(City*)city {
-    [self getInfoOfLocation:[[CLLocation alloc] initWithLatitude:[city.latitude doubleValue] longitude:[city.longitude doubleValue]] completion:^(LocationInfo *locationInfo) {
-        [self->OWMAPIManager getCurrentWeatherByCityId:city.identifier andTimeZone:locationInfo.timeZone withCompletionHandler:^(NSError *error, NSDictionary *result) {
-            [self placeData:result withError:error];
-        }];
-    }];
+    
+    [locationManager startUpdatingLocation];
 }
 
 -(void)getInfoOfLocation:(CLLocation*)location completion:(void (^)(LocationInfo*))completionHandler {
@@ -132,8 +113,59 @@ static int const OFFSET_WIDTH = 10;
     }];
 }
 
--(float)calculateXCoordForIconWithIndex:(int)index andIconsTotal:(int)count {
-    return (self.weatherIconsView.frame.size.width - ICON_WIDTH * count - OFFSET_WIDTH * (count - 1)) / 2 + (ICON_WIDTH + OFFSET_WIDTH) * index;
+#pragma mark - Current weather information refreshing
+
+-(void)refreshCurrentWeatherInformationByLocationInfo:(LocationInfo*)locationInfo {
+    [OWMAPIManager getCurrentWeatherByCity:locationInfo.locality andTimeZone:locationInfo.timeZone withCompletionHandler:^(NSError *error, NSDictionary *result) {
+        [self placeData:result withError:error];
+    }];
+}
+
+-(void)refreshCurrentWeatherInformationByCityId:(City*)city {
+    [self getInfoOfLocation:[[CLLocation alloc] initWithLatitude:[city.latitude doubleValue] longitude:[city.longitude doubleValue]] completion:^(LocationInfo *locationInfo) {
+        [self->OWMAPIManager getCurrentWeatherByCityId:city.identifier andTimeZone:locationInfo.timeZone withCompletionHandler:^(NSError *error, NSDictionary *result) {
+            [self placeData:result withError:error];
+        }];
+    }];
+}
+
+-(void)placeData:(NSDictionary*)result withError:(NSError*)error {
+    if (error) {
+        NSLog(@"%@", error);
+    } else {
+        _currentWeatherInfo = result;
+        self.temperatureValueLabel.text = [self tempCelciusValueStringFromValue:result[@"main"][@"temp"]];
+        self.currentCityLabel.text = [NSString stringWithFormat:@"%@, %@", result[@"name"], result[@"sys"][@"country"]];
+        self.sunriseTimeLabel.text = [NSString stringWithFormat:@"%@: %@", NSLocalizedString(@"Sunrise time", @""), result[@"sys"][@"sunrise"]];
+        self.sunsetTimeLabel.text = [NSString stringWithFormat:@"%@: %@", NSLocalizedString(@"Sunset time", @""), result[@"sys"][@"sunset"]];
+        
+        self.semicircleImageView.hidden = NO;
+        
+        [self placeWeatherConditionIcons:result[@"weather"]];
+        
+        [self.activity stopAnimating];
+    }
+}
+
+#pragma mark - Work with weather icons
+
+-(void)placeWeatherConditionIcons:(NSArray*)weatherConditions {
+    int currentIconIndex = 0;
+    int iconsTotal = (int)[weatherConditions count];
+    
+    if (iconsTotal != 0) {
+        UIImage *image = [UIImage imageNamed:weatherConditions[0][@"icon"]];
+        if (image) {
+            _backgroundImageView.image = image;
+        } else {
+            _backgroundImageView.image = [UIImage imageNamed:@"background_clouds"];
+        }
+    }
+    
+    for (NSDictionary *condDict in weatherConditions) {
+        [self createIconViewWithIconURL:[OWMAPIManager getIconFullUrlWithIconId:condDict[@"icon"]] description:condDict[@"description"] iconsTotal:iconsTotal andCurrentIconIndex:currentIconIndex];
+        currentIconIndex++;
+    }
 }
 
 -(void)createIconViewWithIconURL:(NSString*)iconUrlString description:(NSString*)description iconsTotal:(int)iconsCount andCurrentIconIndex:(int)index {
@@ -159,45 +191,38 @@ static int const OFFSET_WIDTH = 10;
     }
 }
 
--(void)placeWeatherConditionIcons:(NSArray*)weatherConditions {
-    int currentIconIndex = 0;
-    int iconsTotal = (int)[weatherConditions count];
-    
-    if (iconsTotal != 0) {
-        UIImage *image = [UIImage imageNamed:weatherConditions[0][@"icon"]];
-        if (image) {
-            _backgroundImageView.image = image;
-        } else {
-            _backgroundImageView.image = [UIImage imageNamed:@"background_clouds"];
-        }
-    }
-    
-    for (NSDictionary *condDict in weatherConditions) {
-        [self createIconViewWithIconURL:[OWMAPIManager getIconFullUrlWithIconId:condDict[@"icon"]] description:condDict[@"description"] iconsTotal:iconsTotal andCurrentIconIndex:currentIconIndex];
-        currentIconIndex++;
-    }
+-(float)calculateXCoordForIconWithIndex:(int)index andIconsTotal:(int)count {
+    return (self.weatherIconsView.frame.size.width - ICON_WIDTH * count - OFFSET_WIDTH * (count - 1)) / 2 + (ICON_WIDTH + OFFSET_WIDTH) * index;
 }
 
 -(void)clearWeatherIconsView {
     [self.weatherIconsView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
 }
 
+#pragma mark - Actions
+
 - (void)locatingButtonTapped:(id)sender {
     [self clearWeatherIconsView];
     [self initializeAndStartLocationManager];
 }
 
--(void)initializeAndStartLocationManager {
-    locationManager = [[CLLocationManager alloc] init];
-    locationManager.delegate = self;
-    locationManager.distanceFilter = kCLDistanceFilterNone;
-    locationManager.desiredAccuracy = kCLLocationAccuracyBest;
-    
-    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0) {
-        [locationManager requestWhenInUseAuthorization];
+-(void)temperatureValueLabelTapped:(UITapGestureRecognizer*)tgr {
+    self.temperatureValueLabel.text = [self.temperatureValueLabel.text containsString:@"°C"]
+    ? [NSString stringWithFormat:@"%.1f°F", [_currentWeatherInfo[@"main"][@"temp_f"] floatValue]]
+    : [self tempCelciusValueStringFromValue:_currentWeatherInfo[@"main"][@"temp"]];
+}
+
+#pragma mark - Auxiliary methods
+
+-(NSString*)tempCelciusValueStringFromValue:(NSNumber*)value {
+    NSString *temperatureValueString = [NSString string];
+    float tempValue = [value floatValue];
+    if (roundf(tempValue) == 0) {
+        temperatureValueString = @"0.0°C";
+    } else {
+        temperatureValueString = [NSString stringWithFormat:@"%.1f°C", tempValue];
     }
-    
-    [locationManager startUpdatingLocation];
+    return temperatureValueString;
 }
 
 #pragma mark - CLLocationManagerDelegate

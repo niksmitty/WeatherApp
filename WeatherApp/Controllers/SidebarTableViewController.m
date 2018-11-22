@@ -25,6 +25,8 @@ static NSString * const reuseIdentifier = @"menuCell";
     NSManagedObjectContext *managedContext;
 }
 
+#pragma mark - View lifecycle
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -36,6 +38,8 @@ static NSString * const reuseIdentifier = @"menuCell";
     
     menuItems = [self fetchCitiesFromDB];
 }
+
+#pragma mark - Actions
 
 - (IBAction)addButtonTapped:(id)sender {
     CitySelectorViewController *citySVC = [CitySelectorViewController new];
@@ -50,6 +54,8 @@ static NSString * const reuseIdentifier = @"menuCell";
     
     [self presentViewController:citySVC animated:YES completion:nil];
 }
+
+#pragma mark - Work with Core Data
 
 -(void)saveDataIntoDBWithCityInfo:(City*)cityInfo {
     NSManagedObject *cityObject = [NSEntityDescription insertNewObjectForEntityForName:@"City" inManagedObjectContext:managedContext];
