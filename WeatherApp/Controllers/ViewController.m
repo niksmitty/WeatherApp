@@ -134,7 +134,7 @@ static int const OFFSET_WIDTH = 10;
         NSLog(@"%@", error);
     } else {
         _currentWeatherInfo = result;
-        self.temperatureValueLabel.text = [self tempCelciusValueStringFromValue:result[@"main"][@"temp"]];
+        self.temperatureValueLabel.text = [NSString stringWithFormat:@"%d°C", (int)roundf([result[@"main"][@"temp"] floatValue])];
         self.currentCityLabel.text = [NSString stringWithFormat:@"%@, %@", result[@"name"], result[@"sys"][@"country"]];
         self.sunriseTimeLabel.text = [NSString stringWithFormat:@"%@: %@", NSLocalizedString(@"Sunrise time", @""), result[@"sys"][@"sunrise"]];
         self.sunsetTimeLabel.text = [NSString stringWithFormat:@"%@: %@", NSLocalizedString(@"Sunset time", @""), result[@"sys"][@"sunset"]];
@@ -208,21 +208,8 @@ static int const OFFSET_WIDTH = 10;
 
 -(void)temperatureValueLabelTapped:(UITapGestureRecognizer*)tgr {
     self.temperatureValueLabel.text = [self.temperatureValueLabel.text containsString:@"°C"]
-    ? [NSString stringWithFormat:@"%.1f°F", [_currentWeatherInfo[@"main"][@"temp_f"] floatValue]]
-    : [self tempCelciusValueStringFromValue:_currentWeatherInfo[@"main"][@"temp"]];
-}
-
-#pragma mark - Auxiliary methods
-
--(NSString*)tempCelciusValueStringFromValue:(NSNumber*)value {
-    NSString *temperatureValueString = [NSString string];
-    float tempValue = [value floatValue];
-    if (roundf(tempValue) == 0) {
-        temperatureValueString = @"0.0°C";
-    } else {
-        temperatureValueString = [NSString stringWithFormat:@"%.1f°C", tempValue];
-    }
-    return temperatureValueString;
+    ? [NSString stringWithFormat:@"%d°F", (int)roundf([_currentWeatherInfo[@"main"][@"temp_f"] floatValue])]
+    : [NSString stringWithFormat:@"%d°C", (int)roundf([_currentWeatherInfo[@"main"][@"temp"] floatValue])];
 }
 
 #pragma mark - CLLocationManagerDelegate
